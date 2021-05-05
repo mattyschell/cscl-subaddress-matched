@@ -18,32 +18,48 @@ Any remaining unmatched CSCL subaddresses for the address should be deleted.
 
 # Steps
 
-## 1. Load the cscl.subaddress table into a scratch database schema
+## 1. Set up objects in the scratch database schema
 
-## 2. Load the melissa_geocoded_addresses.csv in the same schema 
+```
+sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql 
+```
+
+## 2. Load the cscl.subaddress table into a scratch database schema
+
+This table is registered with the geodatabase but is non-spatial, no archiving,
+no editor tracking.  There is a versioned view for SQL access.
+
+Script something here later, use ArcCatalog now.
+
+## 3. Load the melissa_geocoded_addresses.csv in the same schema 
 
 Using ArcCatalog (4 million records) takes ~2.5 hours.
 
-## 3. Execute the subaddress_delta procedure
+## 4. Insert relevant data into subaddress_source and melissa_geocoded_source
+
+```
+sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql 
+```
+
+## 5. Execute the subaddress_delta procedure
 
 Outputs:
 
 * subaddress_delete
 * subaddress_add
 
-## 4. Load the outputs into CSCL
+## 6. Load the 2 output tables into CSCL
 
-## 5. Delete and Add TBD
+## 7. Delete and Add TBD
 
 
 Some notes on target CSCL.subaddress:
 
-    * Though sub_address_id is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
+1. Though sub_address_id is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
 
-    * Though there is intended to be a foreign key relationship between CSCL.subaddress and CSCL.address_point this is not enforced.  This repository 
-    should check subaddress_add to ensure valid address point ids before adding records to the unconstrained target CSCL.subaddress table.
+2. Though there is intended to be a foreign key relationship between CSCL.subaddress and CSCL.address_point this is not enforced.  This repository should check subaddress_add to ensure valid address point ids before adding records to the unconstrained target CSCL.subaddress table.
 
-    * Users expect the sub_address_id to be the unique, maintained business key for a subaddress record.  However the combination of a subaddress ap_id and melissa_suite uniquely identifies any subaddress.  This unique composite key should also be enforced in this repository.
+3. Users expect the sub_address_id to be the unique, maintained business key for a subaddress record.  However the combination of a subaddress ap_id and melissa_suite uniquely identifies any subaddress.  This unique composite key should also be enforced in this repository.
 
 ## Tests
 
