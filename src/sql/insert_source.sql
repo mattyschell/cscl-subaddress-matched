@@ -1,4 +1,4 @@
-insert into subaddress_source (
+insert into subaddress_src (
      objectid
     ,sub_address_id
     ,melissa_suite
@@ -17,7 +17,8 @@ insert into subaddress_source (
     ,boroughcode
     ,validation_date
     ,update_source
-) select 
+) 
+select 
      objectid
     ,sub_address_id
     ,melissa_suite
@@ -38,13 +39,51 @@ insert into subaddress_source (
     ,update_source
 from subaddress;
 commit;
-insert into melissa_geocoded_source (
+--
+--this distinct appears to be necessary
+--example of duplicates:
+--
+--ADDRESS      |SUITE |ADDRESSPOINTID
+---------------|------|--------------
+--1 Audubon Ave|Apt 1A|       1055323
+--7 Audubon Ave|Apt 1A|       1055323
+--1 Audubon Ave|Apt 1B|       1055323
+--7 Audubon Ave|Apt 1B|       1055323
+--125 W 147th St    |Apt 10A|       1051686
+--101-125 W 147th St|Apt 10A|       1051686
+--101 W 147th St    |Apt 10A|       1051686
+insert into melissa_geocoded_src (
      suite
     ,addresspointid
-) select 
-     suite
-    ,addresspointid
-from melissa_geocoded_a
-where addresspointid is not null;
+) 
+select 
+    distinct
+         to_char(suite)
+        ,addresspointid
+from 
+    melissa_geocoded_a
+where 
+    addresspointid is not null
+and suite is not null;
 commit;    
+--
+-- addresses with no suite at all
+-- the NOT IN is required because some melissa_geocoded_address records
+-- have a null suite but are tucked in among populated suites
+-- for the same address 
+insert into melissa_geocoded_src_nos (
+    addresspointid
+) 
+select
+    distinct addresspointid 
+from 
+    melissa_geocoded_a
+where 
+    addresspointid is not null
+and suite is null
+and addresspointid not in (select 
+                               addresspointid 
+                           from 
+                              melissa_geocoded_src);
+commit;
    

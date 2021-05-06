@@ -1,12 +1,9 @@
 # cscl-subaddress-matched
 
-The Citywide Street Centerline (CSCL) database "subaddress" table contains
-unit addresses associated with an address point.  Emergency response systems, 
-geocoders, and address validators use subaddresses.
+The Citywide Street Centerline (CSCL) database "subaddress" table contains unit addresses associated with an address point.  Emergency response systems, geocoders, and address validators use subaddresses.
 
 The New York City Dept. of City Planning periodically geocodes 
-[Melissa](https://www.melissa.com/company/about) address data to CSCL address
-points.  When Melissa addresses are not matched in CSCL editors slog through the data and make updates.
+[Melissa](https://www.melissa.com/company/about) address data to CSCL address points.  When Melissa addresses are not matched in CSCL editors slog through the data and make updates.
 
 When Melissa addresses are matched to CSCL addresses we perform a bulk update of CSCL subaddresses using the Melissa unit addresses.  For one matched address, Melissa unit addresses may:
 
@@ -14,6 +11,25 @@ When Melissa addresses are matched to CSCL addresses we perform a bulk update of
 * Not match an existing CSCL subaddress record.  Add these unit addresses.
 
 Any remaining unmatched CSCL subaddresses for the address should be deleted. 
+
+    TODO: What does it mean when the suite from melissa is NULL?
+
+Case 1, probably ignore that 6th row:
+
+| ADDRESS       | SUITE  | ADDRESSPOINTID |
+| --------------|--------|----------------|
+| 10102 95th Ave| Apt 1F |         219181 |
+| 10102 95th Ave| Apt 1R |         219181 |
+| 10102 95th Ave| Apt 2A |         219181 |
+| 10102 95th Ave| Apt 2F |         219181 |
+| 10102 95th Ave| Apt 2R |         219181 |
+| 10102 95th Ave| NULL   |         219181 |
+
+Case 2, does this mean delete any subaddresses associated with this address, if subaddresses exist?  This is the only record for the address.
+
+| ADDRESS               | SUITE | ADDRESSPOINTID |
+|-----------------------|-------|----------------|
+| 1506 Commonwealth Ave |       |        2044259 | 
 
 
 # Steps
@@ -26,8 +42,7 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql
 
 ## 2. Load the cscl.subaddress table into a scratch database schema
 
-This table is registered with the geodatabase but is non-spatial, no archiving,
-no editor tracking.  There is a versioned view for SQL access.
+This table is registered with the geodatabase but is non-spatial, no archiving, no editor tracking.  There is a versioned view for SQL access.
 
 Script something here later, use ArcCatalog now.
 

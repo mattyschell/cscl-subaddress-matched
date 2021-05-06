@@ -1,7 +1,7 @@
 -- either load CSCL subaddresses directly into this table
 -- or insert from some other temporary source (see insert_source.sql)
 -- in testing we will populate this from the repo
-create table subaddress_source (
+create table subaddress_src (
     objectid            number
    ,sub_address_id      number(10,0)
    ,melissa_suite       varchar2(255)
@@ -20,19 +20,25 @@ create table subaddress_source (
    ,boroughcode         varchar2(1)
    ,validation_date     timestamp(6)
    ,update_source       varchar2(50)
-   ,constraint subaddress_sourcepkc primary key (sub_address_id)
-   ,constraint subaddress_sourceuqc unique (sub_address_id, melissa_suite)
+   ,constraint subaddress_srcpkc primary key (sub_address_id)
+   ,constraint subaddress_srcuqc unique (sub_address_id, melissa_suite)
 );
-create index subaddress_sourceap_id
-   on subaddress_source (ap_id);
--- either load melissa_geocoded_addresses.csv directly into this table
--- or insert from some other temporary source (see insert_source.sql)
+create index subaddress_srcap_id
+   on subaddress_src (ap_id);
+-- insert from some other temporary source (see insert_source.sql)
 -- this is limited to the columns we use
 -- in testing we will populate this from the repo
-create table melissa_geocoded_source (
+create table melissa_geocoded_src (
      suite              varchar2(256)
     ,addresspointid     number
-    ,constraint melissa_geocoded_sourcepkc primary key (suite, addresspointid)
+    ,constraint melissa_geocoded_srcpkc primary key (suite, addresspointid)
+);
+-- geocoded but no suite
+-- these are either deletes from subaddress 
+-- or they are garbage records for some reason tucked in with other suites 
+create table melissa_geocoded_src_nos (
+    addresspointid number 
+   ,constraint melissa_geocoded_src_nospkc primary key (addresspointid)
 );
 --the next two are outputs
 create table subaddress_delete (
