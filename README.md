@@ -66,9 +66,11 @@ Update the environmentals in testall.bat
 
 ## Schema
 
-[schema](doc/schema.png)
+![schema diagram png](https://github.com/mattyschell/cscl-subaddress-matched/blob/main/doc/schema.png?raw=true)
 
-[test_schema](doc/test_schema.png)
+![test schema diagram png](https://github.com/mattyschell/cscl-subaddress-matched/blob/main/doc/test_schema.png?raw=true)
+
+
 
 
 
