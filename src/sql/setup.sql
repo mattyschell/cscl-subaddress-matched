@@ -1,5 +1,6 @@
 -- either load CSCL subaddresses directly into this table
--- or insert from some other temporary source (see insert_source.sql)
+-- or insert from some other temporary source 
+-- (see insert_source.sql, assumes load to table named subaddress)
 -- in testing we will populate this from the repo
 create table subaddress_src (
     objectid            number
@@ -20,6 +21,7 @@ create table subaddress_src (
    ,boroughcode         varchar2(1)
    ,validation_date     timestamp(6)
    ,update_source       varchar2(50)
+   ,usps_hnum           varchar2(15)
    ,constraint subaddress_srcpkc primary key (sub_address_id)
    ,constraint subaddress_srcuqc unique (sub_address_id, melissa_suite)
 );
@@ -31,6 +33,7 @@ create index subaddress_srcap_id
 create table melissa_geocoded_src (
      suite              varchar2(256)
     ,addresspointid     number
+    ,hnum          number
     ,constraint melissa_geocoded_srcpkc primary key (suite, addresspointid)
 );
 -- geocoded but no suite
@@ -56,6 +59,9 @@ create table subaddress_add (
    ,room                varchar2(50)
    ,seat                varchar2(50)
    ,boroughcode         varchar2(1)
+   ,validation_date     timestamp(6)
+   ,update_source       varchar2(50)
+   ,usps_hnum           varchar2(15)
    ,constraint subaddress_addpkc primary key (sub_address_id)
    ,constraint subaddress_adduqc unique (sub_address_id, melissa_suite)
 );

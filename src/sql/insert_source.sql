@@ -17,6 +17,7 @@ insert into subaddress_src (
     ,boroughcode
     ,validation_date
     ,update_source
+    ,usps_hnum
 ) 
 select 
      objectid
@@ -37,6 +38,7 @@ select
     ,boroughcode
     ,validation_date
     ,update_source
+    ,usps_hnum
 from subaddress;
 commit;
 --
@@ -55,11 +57,13 @@ commit;
 insert into melissa_geocoded_src (
      suite
     ,addresspointid
+    ,hnum
 ) 
 select 
     distinct
          to_char(suite)
         ,addresspointid
+        ,hnum
 from 
     melissa_geocoded_a
 where 
@@ -70,7 +74,7 @@ commit;
 -- addresses with no suite at all
 -- the NOT IN is required because some melissa_geocoded_address records
 -- have a null suite but are tucked in among populated suites
--- for the same address 
+-- for the same address, these are the "base address" for those units
 insert into melissa_geocoded_src_nos (
     addresspointid
 ) 

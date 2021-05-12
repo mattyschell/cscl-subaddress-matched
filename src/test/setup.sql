@@ -19,6 +19,9 @@ create table subaddress_add_test (
    ,room                varchar2(50)
    ,seat                varchar2(50)
    ,boroughcode         varchar2(1)
+   ,validation_date     timestamp(6)
+   ,update_source       varchar2(50)
+   ,usps_hnum           varchar2(15)
    ,constraint subaddress_add_testpkc primary key (sub_address_id)
    ,constraint subaddress_add_testuqc unique (sub_address_id, melissa_suite)
 );

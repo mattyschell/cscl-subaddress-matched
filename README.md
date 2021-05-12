@@ -3,9 +3,9 @@
 The Citywide Street Centerline (CSCL) database "subaddress" table contains unit addresses associated with an address point.  Emergency response systems, geocoders, and address validators use subaddresses.
 
 The New York City Dept. of City Planning periodically geocodes 
-[Melissa](https://www.melissa.com/company/about) address data to CSCL address points.  When Melissa addresses are not matched in CSCthe database humans slog through the data and make updates.
+[Melissa](https://www.melissa.com/company/about) address data to CSCL address points.  When Melissa addresses are not matched in the database humans slog through the data and make updates to addresses and subaddresses.
 
-When Melissa addresses are matched to CSCL addresses we perform a bulk update of CSCL subaddresses using the Melissa unit addresses.  For one matched address, Melissa unit addresses may:
+When Melissa addresses are matched to CSCL database addresses we perform a bulk update of CSCL subaddresses using the Melissa unit addresses.  For one matched address, Melissa unit addresses may:
 
 * Match an existing CSCL subaddress record.  Keep these CSCL subaddresses.
 * Not match an existing CSCL subaddress record.  Add these unit addresses.
@@ -31,7 +31,7 @@ Script something here later, use ArcCatalog now.
 
 Using ArcCatalog (4 million records) takes ~2.5 hours.
 
-## 4. Insert relevant data into subaddress_source and melissa_geocoded_source
+## 4. Insert relevant data into subaddress_src and melissa_geocoded_src
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql 
@@ -39,7 +39,7 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql
 
 ## 5. Execute the subaddress_delta procedure
 
-Outputs:
+Outputs populated:
 
 * subaddress_delete
 * subaddress_add
@@ -59,9 +59,9 @@ Some notes on target CSCL.subaddress:
 
 ## Tests
 
-Update the environmentals in testall.bat
+Update the environmentals in test.bat
 ```bat
-> testall.bat
+> test.bat
 ```
 
 ## Schema
