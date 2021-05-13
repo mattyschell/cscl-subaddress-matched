@@ -55,15 +55,13 @@ commit;
 --101-125 W 147th St|Apt 10A|       1051686
 --101 W 147th St    |Apt 10A|       1051686
 insert into melissa_geocoded_src (
-     suite
-    ,addresspointid
-    ,hnum
+    addresspointid
+   ,suite
 ) 
 select 
     distinct
-         to_char(suite)
-        ,addresspointid
-        ,hnum
+        addresspointid
+       ,to_char(suite)
 from 
     melissa_geocoded_a
 where 
@@ -90,4 +88,7 @@ and addresspointid not in (select
                            from 
                               melissa_geocoded_src);
 commit;
+-- drop hnum into this bucket for later use
+
+
    

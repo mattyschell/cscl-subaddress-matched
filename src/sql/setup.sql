@@ -31,17 +31,23 @@ create index subaddress_srcap_id
 -- this is limited to the columns we use
 -- in testing we will populate this from the repo
 create table melissa_geocoded_src (
-     suite              varchar2(256)
-    ,addresspointid     number
-    ,hnum          number
-    ,constraint melissa_geocoded_srcpkc primary key (suite, addresspointid)
+     addresspointid     number
+    ,suite              varchar2(256)
+    ,constraint melissa_geocoded_srcpkc primary key (addresspointid,suite)
 );
--- geocoded but no suite
--- these are either deletes from subaddress 
--- or they are garbage records for some reason tucked in with other suites 
+-- geocoded but no suite, probably useless
+-- these are either base addresses for each set of units
+-- or errors, missing units in melissa (only about 2k of these)
 create table melissa_geocoded_src_nos (
-    addresspointid number 
+    addresspointid      number 
    ,constraint melissa_geocoded_src_nospkc primary key (addresspointid)
+);
+-- we need hnum but it belongs to addresspoints, not units
+-- normalized and inserted from melissa here
+create table melissa_geocoded_src_hnum (
+    addresspointid      number
+   ,hnum                number
+   ,constraint melissa_geocoded_src_hnumpkc primary key (addresspointid)
 );
 --the next two are outputs
 create table subaddress_delete (
