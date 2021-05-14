@@ -1,1 +1,2 @@
-insert into subaddress_delete_test (sub_address_id) values (100); 
+delete from subaddress_delete_test;
+commit;

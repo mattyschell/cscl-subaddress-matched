@@ -1,5 +1,4 @@
-delete from melissa_geocoded_src;
-delete from melissa_geocoded_src_nos;
+@src/sql/teardown.sql
 begin
     execute immediate 'drop table subaddress_delete_test';
 exception 

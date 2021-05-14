@@ -1,7 +1,10 @@
+@src/sql/teardown.sql
+@src/sql/setup.sql
 @src/sql/deploy.sql
 -- test data
 @src/test/subaddress-src-fixtures.sql
 @src/test/melissa-geocoded-src-fixtures.sql
+@src/test/melissa-geocoded-src-hnum-fixtures.sql
 @src/test/melissa-geocoded-src-nos-fixtures.sql
 -- sidecar tables to hold expected test results
 create table subaddress_delete_test (

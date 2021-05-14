@@ -1,6 +1,17 @@
 delete from melissa_geocoded_src_nos;
 commit;
-INSERT INTO MELISSA_GEOCODED_SRC_NOS
-(ADDRESSPOINTID)
-VALUES(100);
+insert into melissa_geocoded_src_nos
+    (addresspointid)
+values
+    (21158);
+insert into melissa_geocoded_src_nos
+    (addresspointid)
+values
+    (58981);
+insert into melissa_geocoded_src_nos
+    (addresspointid)
+values
+    (10171675);
 commit;
+
+
