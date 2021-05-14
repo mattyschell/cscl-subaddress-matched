@@ -69,9 +69,9 @@ where
 and suite is not null;
 commit;    
 --
--- addresses with no suite at all
--- the NOT IN is required because some melissa_geocoded_address records
--- have a null suite but are tucked in among populated suites
+-- addresses with no suite at all, about 2k
+-- the NOT IN is required because many melissa_geocoded_address records
+-- have a null suite that are tucked in among populated suites
 -- for the same address, these are the "base address" for those units
 insert into melissa_geocoded_src_nos (
     addresspointid
@@ -88,7 +88,23 @@ and addresspointid not in (select
                            from 
                               melissa_geocoded_src);
 commit;
--- drop hnum into this bucket for later use
+-- drop hnum into this bucket for later update
+-- house numbers are a relation of an address
+-- but in CSCL house numbers are denormalized onto subaddresses
+-- set it aside for now, update outputs at the end
+insert into melissa_geocoded_src_hnum (
+    addresspointid
+   ,hnum
+) 
+select 
+    distinct addresspointid
+            ,hnum 
+from 
+    melissa_geocoded_a
+where 
+    addresspointid is not null
+and hnum is not null;
+commit;
 
 
    

@@ -33,7 +33,7 @@ create index subaddress_srcap_id
 create table melissa_geocoded_src (
      addresspointid     number
     ,suite              varchar2(256)
-    ,constraint melissa_geocoded_srcpkc primary key (addresspointid,suite)
+    ,constraint melissa_geocoded_srcpkc primary key (addresspointid, suite)
 );
 -- geocoded but no suite, probably useless
 -- these are either base addresses for each set of units
@@ -47,7 +47,7 @@ create table melissa_geocoded_src_nos (
 create table melissa_geocoded_src_hnum (
     addresspointid      number
    ,hnum                number
-   ,constraint melissa_geocoded_src_hnumpkc primary key (addresspointid)
+   ,constraint melissa_geocoded_src_hnumpkc primary key (addresspointid, hnum)
 );
 --the next two are outputs
 create table subaddress_delete (
