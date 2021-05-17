@@ -37,19 +37,22 @@ Using ArcCatalog (4 million records) takes ~2.5 hours.
 sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql 
 ```
 
-## 5. Execute the subaddress_delta procedure
+## 5. Execute the delta code 
+
+```
+sqlplus devschema/"iluvesri247"@devdb @src/sql/delta.sql 
+```
 
 Outputs populated:
 
 * subaddress_delete
 * subaddress_add
 
-## 6. Load the 2 output tables into CSCL
+These output tables are ready to delete and insert records in the target CSCL
+environment.
 
-## 7. Delete and Add TBD
 
-
-Some notes on target CSCL.subaddress:
+## Some notes on target CSCL.subaddress:
 
 1. Though sub_address_id is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
 

@@ -1,11 +1,6 @@
-@src/sql/teardown.sql
+@src/test/teardown.sql
 @src/sql/setup.sql
 @src/sql/deploy.sql
--- test data
-@src/test/subaddress-src-fixtures.sql
-@src/test/melissa-geocoded-src-fixtures.sql
-@src/test/melissa-geocoded-src-hnum-fixtures.sql
-@src/test/melissa-geocoded-src-nos-fixtures.sql
 -- sidecar tables to hold expected test results
 create table subaddress_delete_test (
     sub_address_id number(10,0)
@@ -28,7 +23,13 @@ create table subaddress_add_test (
    ,constraint subaddress_add_testpkc primary key (sub_address_id)
    ,constraint subaddress_add_testuqc unique (sub_address_id, melissa_suite)
 );
+-- test data
+@src/test/subaddress-src-fixtures.sql
+@src/test/melissa-geocoded-src-fixtures.sql
+@src/test/melissa-geocoded-src-hnum-fixtures.sql
+@src/test/melissa-geocoded-src-nos-fixtures.sql
 -- add expected test results to sidecar tables
 @src/test/subaddress_delete_fixtures.sql
 @src/test/subaddress_add_fixtures.sql
-EXIT
+-- done with setup
+-- run tests to populate subaddress_delete and subaddress_add
