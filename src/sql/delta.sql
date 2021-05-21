@@ -2,16 +2,20 @@
 insert into subaddress_add (
     melissa_suite
    ,ap_id
+   ,usps_hnum
 ) select
       suite
      ,addresspointid
+     ,hnum
   from
       melissa_geocoded_src
   where (UPPER(suite)
-        ,addresspointid)
+        ,addresspointid
+        ,hnum)
   not in (select
-             melissa_suite
-            ,ap_id
+              melissa_suite
+             ,ap_id
+             ,usps_hnum
           from
              subaddress_src);
 commit; 
@@ -23,8 +27,16 @@ insert into subaddress_delete (
   from 
       subaddress_src
   where ap_id in 
-      (select ap_id from subaddress_add)
+      (select 
+           ap_id 
+       from 
+           subaddress_add)
   and (melissa_suite
-      ,ap_id)
-  not in (select melissa_suite, ap_id from subaddress_add);
+      ,ap_id
+      ,usps_hnum)
+  not in (select melissa_suite
+                ,ap_id
+                ,usps_hnum 
+          from 
+              subaddress_add);
 commit;

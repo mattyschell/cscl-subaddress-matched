@@ -21,12 +21,11 @@ create table subaddress_add_test (
    ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
    ,constraint subaddress_add_testpkc primary key (sub_address_id)
-   ,constraint subaddress_add_testuqc unique (sub_address_id, melissa_suite)
+   ,constraint subaddress_add_testuqc unique (sub_address_id,melissa_suite,usps_hnum)
 );
 -- test data
 @src/test/subaddress-src-fixtures.sql
 @src/test/melissa-geocoded-src-fixtures.sql
-@src/test/melissa-geocoded-src-hnum-fixtures.sql
 @src/test/melissa-geocoded-src-nos-fixtures.sql
 -- add expected test results to sidecar tables
 @src/test/subaddress_delete_fixtures.sql

@@ -23,33 +23,29 @@ create table subaddress_src (
    ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
    ,constraint subaddress_srcpkc primary key (sub_address_id)
-   ,constraint subaddress_srcuqc unique (sub_address_id, melissa_suite)
 );
 create index subaddress_srcap_id
    on subaddress_src (ap_id);
+create index subaddress_srcmelissa_sui
+   on subaddress_src (melissa_suite);
 -- insert from some other temporary source (see insert_source.sql)
 -- this is limited to the columns we use
 -- in testing we will populate this from the repo
 create table melissa_geocoded_src (
      addresspointid     number
     ,suite              varchar2(256)
-    ,constraint melissa_geocoded_srcpkc primary key (addresspointid, suite)
+    ,hnum               number
+    ,constraint melissa_geocoded_srcuqc unique (addresspointid,suite,hnum)-- constraint melissa_geocoded_srcuqc primary key (addresspointid,suite,hnum)
 );
--- geocoded but no suite, probably useless
+-- geocoded but no suite, probably not going to use these
 -- these are either base addresses for each set of units
 -- or errors, missing units in melissa (only about 2k of these)
 create table melissa_geocoded_src_nos (
     addresspointid      number 
    ,constraint melissa_geocoded_src_nospkc primary key (addresspointid)
 );
--- we need hnum but it belongs to addresspoints, not units
--- normalized and inserted from melissa here
-create table melissa_geocoded_src_hnum (
-    addresspointid      number
-   ,hnum                number
-   ,constraint melissa_geocoded_src_hnumpkc primary key (addresspointid, hnum)
-);
---the next two are outputs
+-- the next two are outputs
+-- though subaddress delete can be prepopulated to force replacements
 create table subaddress_delete (
     sub_address_id number(10,0)
    ,constraint subaddress_deletepkc primary key (sub_address_id)
@@ -69,6 +65,14 @@ create table subaddress_add (
    ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
    ,constraint subaddress_addpkc primary key (sub_address_id)
-   ,constraint subaddress_adduqc unique (sub_address_id, melissa_suite)
+   ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum)
 );
+-- create a sequence for new sub_address_ids
+-- the repo code will increment the "next" value to a higher number
+-- than the max value in subaddress_src.sub_address_id
+create sequence subaddress_addseq 
+    start with 1
+    increment by 1
+    cache 100
+    nocycle;
     

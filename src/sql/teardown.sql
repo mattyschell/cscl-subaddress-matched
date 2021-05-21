@@ -35,18 +35,6 @@ exception
 end;
 /
 begin
-    execute immediate 'drop table melissa_geocoded_src_hnum';
-exception 
-    when others then
-    if sqlcode = -942
-    then
-        null;
-    else
-        raise;
-    end if;
-end;
-/
-begin
     execute immediate 'drop table subaddress_delete';
 exception 
     when others then
@@ -60,6 +48,18 @@ end;
 /
 begin
     execute immediate 'drop table subaddress_add';
+exception 
+    when others then
+    if sqlcode = -942
+    then
+        null;
+    else
+        raise;
+    end if;
+end;
+/
+begin
+    execute immediate 'drop sequence subaddress_addseq';
 exception 
     when others then
     if sqlcode = -942

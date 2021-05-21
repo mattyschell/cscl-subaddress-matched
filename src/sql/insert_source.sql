@@ -54,14 +54,18 @@ commit;
 --125 W 147th St    |Apt 10A|       1051686
 --101-125 W 147th St|Apt 10A|       1051686
 --101 W 147th St    |Apt 10A|       1051686
+--
+-- hnum can be null
 insert into melissa_geocoded_src (
     addresspointid
    ,suite
+   ,hnum
 ) 
 select 
     distinct
         addresspointid
        ,to_char(suite)
+       ,to_number(hnum)
 from 
     melissa_geocoded_a
 where 
@@ -87,24 +91,4 @@ and addresspointid not in (select
                                addresspointid 
                            from 
                               melissa_geocoded_src);
-commit;
--- drop hnum into this bucket for later update
--- house numbers are a relation of an address
--- but in CSCL house numbers are denormalized onto subaddresses
--- set it aside for now, update outputs at the end
-insert into melissa_geocoded_src_hnum (
-    addresspointid
-   ,hnum
-) 
-select 
-    distinct addresspointid
-            ,hnum 
-from 
-    melissa_geocoded_a
-where 
-    addresspointid is not null
-and hnum is not null;
-commit;
-
-
-   
+commit;   
