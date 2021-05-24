@@ -23,7 +23,7 @@ insert into subaddress_add (
           from
              subaddress_src);
 commit; 
---Any remaining unmatched CSCL subaddresses for the address should be deleted
+--Any remaining unmatched CSCL subaddresses for an address should be deleted
 insert into subaddress_delete (
     sub_address_id
 ) select 

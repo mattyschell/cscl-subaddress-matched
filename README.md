@@ -25,11 +25,9 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql
 
 This source table is registered with the geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists.
 
-Script something here later, use ArcCatalog now. 
-
 ## 3. Load the melissa_geocoded_addresses.csv in the same schema 
 
-Using ArcCatalog (4 million records) takes ~2.5 hours.
+Using ArcCatalog to load 4 million records may require several hours.
 
 ## 4. Insert relevant data into subaddress_src and melissa_geocoded_src
 
@@ -37,15 +35,14 @@ Using ArcCatalog (4 million records) takes ~2.5 hours.
 sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql 
 ```
 
-## 5. Add aby records to subaddress_delete to force their replacement
+## 5. Add any records to subaddress_delete to force their replacement
 
-We might like to refresh subaddresses that exist but which we want to be
-refreshed with Melissa data.  For example, older subaddresses lacking house numbers.
+We might like to refresh subaddresses that already exist but which we want to be refreshed with Melissa data.  An example is older subaddresses without house numbers.  We will replace all subaddresses on the address point, there is no way to uniquely identify historic subaddress records in CSCL.
 
-## 5. Execute the delta code 
+## 5. Populate the output tables
 
 ```
-sqlplus devschema/"iluvesri247"@devdb @src/sql/delta.sql 
+sqlplus devschema/"iluvesri247"@devdb @run.sql 
 ```
 
 Outputs populated:
@@ -54,16 +51,15 @@ Outputs populated:
 * subaddress_add
 
 These output tables are ready to delete and insert records in the target CSCL
-environment.
-
+environment. Perform the delete first.
 
 ## Some notes on target CSCL.subaddress:
 
 1. Though sub_address_id is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
 
-2. Though there is intended to be a one to many foreign key relationship between CSCL.address_point and CSCL.subaddress this is not enforced.  This repository should check subaddress_add to ensure valid address point ids before adding records to the unconstrained target CSCL.subaddress table.
+2. Though there is intended to be a one-to-many foreign key relationship between CSCL.address_point and CSCL.subaddress this is not enforced. When loading to CSCL we should check subaddress_add to ensure valid address point ids before adding new records to the unconstrained target CSCL.subaddress table.
 
-3. Users expect the sub_address_id to be the unique, maintained business key for a subaddress record.  However the combination of a subaddress ap_id (address point id), melissa_suite, usps_hnum (house number) uniquely identifies any subaddress and matches it to Melissa records.  This unique composite key should also be enforced in this repository.
+3. Users expect the sub_address_id to be the unique, maintained business key for a subaddress record.  However the combination of a subaddress ap_id (address point id), melissa_suite, and usps_hnum (house number) uniquely identifies any subaddress and matches it to Melissa records.  This unique composite key must be enforced in this repository.
 
 ## Tests
 

@@ -29,8 +29,6 @@ AS
 
         seqval := p_nextval - seqval;
 
-        dbms_output.put_line(seqval);
-
         psql := 'alter sequence subaddress_addseq increment by ' || seqval;
         execute immediate psql;
 

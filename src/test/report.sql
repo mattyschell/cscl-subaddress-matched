@@ -1,4 +1,4 @@
-select 'Rows missing from subaddress_add: ' from dual;
+select 'Tuples (ap_id,melissa_suite,usps_hnum) missing from subaddress_add: ' from dual;
 select 
     ap_id
    ,melissa_suite
@@ -12,7 +12,7 @@ select
    ,usps_hnum
 from 
 subaddress_add;
-select 'Rows that should not be in subaddress_add: ' from dual;
+select 'Tuples (ap_id,melissa_suite,usps_hnum) that should not be in subaddress_add: ' from dual;
 select 
     ap_id
    ,melissa_suite 
@@ -26,7 +26,7 @@ select
    ,usps_hnum
 from 
 subaddress_add_test;
-select 'Rows missing from subaddress_delete: ' from dual;
+select 'sub_address_ids missing from subaddress_delete: ' from dual;
 select 
     sub_address_id 
 from 
@@ -36,7 +36,7 @@ select
     sub_address_id 
 from 
     subaddress_delete;
-select 'Rows that should not be in subaddress_delete: ' from dual;
+select 'sub_address_ids that should not be in subaddress_delete: ' from dual;
 select 
     sub_address_id 
 from 

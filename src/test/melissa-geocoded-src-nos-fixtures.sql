@@ -1,5 +1,6 @@
 delete from melissa_geocoded_src_nos;
 commit;
+-- these are samples of no suites that we should look at more carefully later
 insert into melissa_geocoded_src_nos
     (addresspointid)
 values
