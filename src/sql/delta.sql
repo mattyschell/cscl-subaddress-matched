@@ -8,7 +8,7 @@ insert into subaddress_add (
    ,usps_hnum
 ) select
       subaddress_addseq.nextval
-     ,suite
+     ,UPPER(suite)
      ,addresspointid
      ,hnum
   from
@@ -17,7 +17,7 @@ insert into subaddress_add (
         ,addresspointid
         ,hnum)
   not in (select
-              melissa_suite
+              UPPER(melissa_suite)
              ,ap_id
              ,usps_hnum
           from

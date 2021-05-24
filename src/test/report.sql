@@ -1,28 +1,28 @@
 select 'Tuples (ap_id,melissa_suite,usps_hnum) missing from subaddress_add: ' from dual;
 select 
     ap_id
-   ,melissa_suite
+   ,UPPER(melissa_suite)
    ,usps_hnum 
 from 
     subaddress_add_test
 minus
 select 
     ap_id
-   ,melissa_suite 
+   ,UPPER(melissa_suite) 
    ,usps_hnum
 from 
 subaddress_add;
 select 'Tuples (ap_id,melissa_suite,usps_hnum) that should not be in subaddress_add: ' from dual;
 select 
     ap_id
-   ,melissa_suite 
+   ,UPPER(melissa_suite) 
    ,usps_hnum
 from 
     subaddress_add
 minus
 select 
     ap_id
-   ,melissa_suite 
+   ,UPPER(melissa_suite) 
    ,usps_hnum
 from 
 subaddress_add_test;

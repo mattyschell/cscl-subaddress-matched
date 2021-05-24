@@ -8,7 +8,7 @@ The New York City Dept. of City Planning periodically geocodes
 When Melissa addresses do match CSCL database addresses we perform a bulk update of CSCL subaddresses using the Melissa unit addresses.  For one matched address, a Melissa unit address may:
 
 * Match an existing CSCL subaddress record.  Keep these CSCL subaddresses.
-* Not match an existing CSCL subaddress record.  Add these unit addresses.
+* Not match an existing CSCL subaddress record.  Add these subaddresses.
 
 Any remaining existing CSCL subaddresses that did not match Melissa subaddresses for the address should be deleted. 
 
