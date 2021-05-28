@@ -8,7 +8,7 @@ insert into subaddress_add (
    ,usps_hnum
 ) select
       subaddress_addseq.nextval
-     ,UPPER(suite)
+     ,TRIM(UPPER(suite))
      ,addresspointid
      ,hnum
   from
