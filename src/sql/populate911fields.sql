@@ -10,8 +10,8 @@ set
                  or   upper(a.melissa_suite) like 'SPC%'
                  or   upper(a.melissa_suite) like 'STE%'
                  or   upper(a.melissa_suite) like 'UNIT%'
-                 or   regexp_like(a.melissa_suite, '^[0-9]') -- todo test # + Designator
-                 or   (length(a.melissa_suite) = 1 and regexp_like(a.melissa_suite, '^[:alpha:]')) -- todo test "single letter desig"
+                 or   regexp_like(a.melissa_suite, '^[0-9]') 
+                 or   (length(a.melissa_suite) = 1 and regexp_like(a.melissa_suite, '^[:A-Z:]')) 
                  then
                      a.melissa_suite
                  else
@@ -46,17 +46,15 @@ set
                  end        
    ,a.additional_loc_info =
              case 
-                 when upper(a.melissa_suite) = 'FRNT'
-                 or   upper(a.melissa_suite) like 'REAR%'
+                 when upper(a.melissa_suite) like 'DEPT%'
+                 or   upper(a.melissa_suite) = 'FRNT' -- distinguish from FRNT in room
+                 or   upper(a.melissa_suite) like 'LOT%'
+                 or   upper(a.melissa_suite) like 'PIER%'
                  or   upper(a.melissa_suite) like 'SIDE%'
-                 or   upper(a.melissa_suite) like 'DEPT%'
+                 or   upper(a.melissa_suite) like 'STOP%'
                  then
                      a.melissa_suite
                  else
                      null
              end;
 commit;
-                
-    
-              
-  

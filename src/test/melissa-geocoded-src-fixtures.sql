@@ -37,5 +37,15 @@ insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
     (3, 'Apt 3a', 3);
---
+-- test 4 "# + Designator" goes to unit
+-- does not appear to exist so better add to test suite
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (4, '1A', 4);
+-- test 5 a single letter goes to unit
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (5, 'B', 5);
 commit;

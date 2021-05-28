@@ -12,5 +12,5 @@ set TRIMSPOOL ON
 SPOOL report.txt
 @src/test/report.sql
 SPOOL OFF
---@src/test/teardown.sql
+@src/test/teardown.sql
 EXIT
