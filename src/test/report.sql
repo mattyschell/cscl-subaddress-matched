@@ -104,6 +104,6 @@ or  NVL(a.unit,'NA') <> NVL(b.unit,'NA')
 or  NVL(a.room,'NA') <> NVL(b.room,'NA') 
 or  NVL(a.seat, 'NA') <> NVL(b.seat,'NA')
 )
-and a.ap_id in (3,4,5);
+and a.ap_id in (3,4,5,6,7,8,9);
 
 

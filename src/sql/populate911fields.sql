@@ -10,8 +10,10 @@ set
                  or   upper(a.melissa_suite) like 'SPC%'
                  or   upper(a.melissa_suite) like 'STE%'
                  or   upper(a.melissa_suite) like 'UNIT%'
+                 or   upper(a.melissa_suite) like '#%'
                  or   regexp_like(a.melissa_suite, '^[0-9]') 
                  or   (length(a.melissa_suite) = 1 and regexp_like(a.melissa_suite, '^[:A-Z:]')) 
+                 or   upper(a.melissa_suite) like 'REAR %' -- distinguish from 'REAR'
                  then
                      a.melissa_suite
                  else
@@ -38,7 +40,7 @@ set
                     null
              end  
    ,a.building = case
-                     when upper(a.melissa_suite) = 'BLDG'
+                     when upper(a.melissa_suite) LIKE 'BLDG%'
                      then
                          a.melissa_suite
                      else
@@ -52,6 +54,7 @@ set
                  or   upper(a.melissa_suite) like 'PIER%'
                  or   upper(a.melissa_suite) like 'SIDE%'
                  or   upper(a.melissa_suite) like 'STOP%'
+                 or   upper(a.melissa_suite) = 'REAR' -- distinguish from REAR xx in unit
                  then
                      a.melissa_suite
                  else

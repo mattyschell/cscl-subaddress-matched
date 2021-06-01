@@ -48,4 +48,24 @@ insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
     (5, 'B', 5);
+-- test 6 #s go to unit
+-- I think this is what test 4 was supposed to be
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (6, '# 11S', 6);
+-- test 7 REAR to additional loc vs REAR xx to unit 
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (7, 'REAR', 7);
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (8, 'REAR 1', 8);
+-- test 8 BLDGs to Building 
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (9, 'BLDG 1', 9);
 commit;
