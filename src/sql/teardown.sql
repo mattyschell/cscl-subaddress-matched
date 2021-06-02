@@ -62,7 +62,7 @@ begin
     execute immediate 'drop sequence subaddress_addseq';
 exception 
     when others then
-    if sqlcode = -942
+    if sqlcode = -2289
     then
         null;
     else

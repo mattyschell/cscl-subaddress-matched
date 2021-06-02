@@ -29,14 +29,20 @@ insert into melissa_geocoded_src
 values
     (1018320, 'RM 1008', 134);
 -- test 3: add a single missing subaddress
+-- apt3 is in subaddress_src
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3, 'Apt 3', 3);
+    (3, 'Apt 3', 100);
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3, 'Apt 3a', 3);
+    (3, 'Apt 3a', 100);
+--
+-- tests 4 through 9 are single new subaddresses to add
+-- (on fake address points 4 through 11)
+-- they test the ng911 field updates, not the add/delete logic   
+--
 -- test 4 "# + Designator" goes to unit
 -- does not appear to exist so better add to test suite
 insert into melissa_geocoded_src
@@ -68,4 +74,25 @@ insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
     (9, 'BLDG 1', 9);
+-- test 9 FRNT X to room vs FRNT to additional_loc_info 
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (10, 'FRNT', 10);
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (11, 'FRNT 1', 11);
+--
+-- resume add/remove logic testing
+--
+-- test 10: 2 subaddreses exist on address point 12, keep APT 1, remove bsmt, add Apt 2
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (12, 'Apt 1', 100);
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (12, 'APT 2', 100);
 commit;

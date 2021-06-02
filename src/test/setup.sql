@@ -23,14 +23,10 @@ create table subaddress_add_test (
    ,constraint subaddress_add_testpkc primary key (sub_address_id)
    ,constraint subaddress_add_testuqc unique (ap_id,melissa_suite,usps_hnum)
 );
-
 -- test data
 @src/test/subaddress-src-fixtures.sql
 @src/test/melissa-geocoded-src-fixtures.sql
 @src/test/melissa-geocoded-src-nos-fixtures.sql
 @src/test/subaddress-delete-fixtures.sql
 -- add expected test results to _test tables
-@src/test/subaddress-delete-test-fixtures.sql
-@src/test/subaddress-add-test-fixtures.sql
 -- done with setup
--- run tests to populate subaddress_delete and subaddress_add

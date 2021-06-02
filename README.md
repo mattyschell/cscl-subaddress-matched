@@ -37,7 +37,7 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql
 
 ## 5. Add any records to subaddress_delete to force their replacement
 
-We might like to refresh subaddresses that already exist but which we want to be refreshed with Melissa data.  An example is older subaddresses without house numbers.  We will replace all subaddresses on the address point, there is no way to uniquely identify historic subaddress records in CSCL.
+We might like to refresh subaddresses that already exist but which we want to be refreshed with Melissa data.  An example is older subaddresses without house numbers.  We might wish to replace all subaddresses on an address point when there is no way to uniquely identify subaddress records without a populated house number.
 
 ## 5. Populate the output tables
 

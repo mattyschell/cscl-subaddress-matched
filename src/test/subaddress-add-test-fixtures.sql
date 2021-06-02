@@ -13,7 +13,7 @@ values
 insert into subaddress_add_test
     (melissa_suite,ap_id,unit,usps_hnum)
 values
-    ('APT 3A',3,'APT 3A',3);
+    ('APT 3A',3,'APT 3A',100);
 -- test 4 "# + Designator" goes to unit
 -- does not appear to exist so better add to test suite
 insert into subaddress_add_test
@@ -30,7 +30,7 @@ insert into subaddress_add_test
     (melissa_suite,ap_id,unit,usps_hnum)
 values
     ('# 11S',6,'# 11S',6);
--- test 8 REAR to additional loc vs REAR xx to unit 
+-- test 7 REAR to additional loc vs REAR xx to unit 
 insert into subaddress_add_test
     (melissa_suite,ap_id,additional_loc_info,usps_hnum)
 values
@@ -39,8 +39,24 @@ insert into subaddress_add_test
     (melissa_suite,ap_id,unit,usps_hnum)
 values
     ('REAR 1', 8, 'REAR 1', 8);
+-- test 8 BLDGs to Building 
 insert into subaddress_add_test
     (melissa_suite,ap_id,building,usps_hnum)
 values
     ('BLDG 1', 9, 'BLDG 1', 9);
+-- test 9 FRNT X to room vs FRNT to additional_loc_info 
+insert into subaddress_add_test
+    (melissa_suite,ap_id,additional_loc_info,usps_hnum)
+values
+    ('FRNT', 10, 'FRNT', 10);
+insert into subaddress_add_test
+    (melissa_suite,ap_id,room,usps_hnum)
+values
+    ('FRNT 1', 11, 'FRNT 1', 11);
+-- test 10: 2 subaddreses exist on address point 12, keep APT 1, remove bsmt, add Apt 2
+--          so only apt 2 should be in the add table
+insert into subaddress_add_test
+    (melissa_suite,ap_id,unit,usps_hnum)
+values
+    ('APT 2', 12, 'APT 2', 100);
 commit;
