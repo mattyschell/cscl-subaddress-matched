@@ -3,39 +3,22 @@
 -- (see insert_source.sql, assumes load to table named subaddress)
 -- in testing we will populate this from the repo
 create table subaddress_src (
-    objectid            number
-   ,sub_address_id      number(10,0)
+    sub_address_id      number(10,0)
    ,melissa_suite       varchar2(255)
    ,ap_id               number(10,0)
-   ,additional_loc_info varchar2(80)
-   ,building            varchar2(50)
-   ,floor               varchar2(50) 
-   ,unit                varchar2(50)
-   ,room                varchar2(50)
-   ,seat                varchar2(50)
-   ,created_by          varchar2(50)
-   ,created_date        timestamp (6)
-   ,modified_by         varchar2(50)
-   ,modified_date       timestamp (6)
-   ,globalid            char(38) 
-   ,boroughcode         varchar2(1)
-   ,validation_date     timestamp(6)
-   ,update_source       varchar2(50)
-   ,usps_hnum           varchar2(15)
+   ,usps_hnum           number -- this is varchar in cscl I dont know why
    ,constraint subaddress_srcpkc primary key (sub_address_id)
+   ,constraint subaddress_srcuqc unique (sub_address_id,melissa_suite,ap_id,usps_hnum)
 );
-create index subaddress_srcap_id
-   on subaddress_src (ap_id);
-create index subaddress_srcmelissa_sui
-   on subaddress_src (melissa_suite);
 -- insert from some other temporary source (see insert_source.sql)
 -- this is limited to the columns we use
 -- in testing we will populate this from the repo
+-- 
 create table melissa_geocoded_src (
      addresspointid     number
     ,suite              varchar2(256)
     ,hnum               number
-    ,constraint melissa_geocoded_srcuqc unique (addresspointid,suite,hnum)-- constraint melissa_geocoded_srcuqc primary key (addresspointid,suite,hnum)
+    ,constraint melissa_geocoded_srcuqc unique (addresspointid,suite,hnum)
 );
 -- geocoded but no suite, probably not going to use these
 -- these are either base addresses for each set of units

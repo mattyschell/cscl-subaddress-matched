@@ -1,44 +1,14 @@
 insert into subaddress_src (
-     objectid
-    ,sub_address_id
+     sub_address_id
     ,melissa_suite
     ,ap_id
-    ,additional_loc_info
-    ,building
-    ,floor
-    ,unit
-    ,room
-    ,seat
-    ,created_by
-    ,created_date
-    ,modified_by
-    ,modified_date
-    ,globalid
-    ,boroughcode
-    ,validation_date
-    ,update_source
     ,usps_hnum
 ) 
 select 
-     objectid
-    ,sub_address_id
-    ,melissa_suite
+     sub_address_id
+    ,trim(upper(melissa_suite))
     ,ap_id
-    ,additional_loc_info
-    ,building
-    ,floor
-    ,unit
-    ,room
-    ,seat
-    ,created_by
-    ,created_date
-    ,modified_by
-    ,modified_date
-    ,globalid
-    ,boroughcode
-    ,validation_date
-    ,update_source
-    ,usps_hnum
+    ,to_number(usps_hnum) --cscl is character
 from subaddress;
 commit;
 --
@@ -64,7 +34,7 @@ insert into melissa_geocoded_src (
 select 
     distinct
         addresspointid
-       ,to_char(suite)
+       ,trim(upper(to_char(suite)))
        ,to_number(hnum)
 from 
     melissa_geocoded_a
@@ -92,3 +62,5 @@ and addresspointid not in (select
                            from 
                               melissa_geocoded_src);
 commit;   
+call dbms_stats.gather_schema_stats(USER);
+

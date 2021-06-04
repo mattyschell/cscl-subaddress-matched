@@ -1,0 +1,6 @@
+set SCHEMA=REPLACEWITHSCHEMANAME
+set DATABASE=REPLACEWITHDATABASE
+set SCHEMAPASS="iluvesri247"
+CALL sqlplus %SCHEMA%/%SCHEMAPASS%@%DATABASE% @src/sql/setup.sql
+CALL sqlplus %SCHEMA%/%SCHEMAPASS%@%DATABASE% @src/sql/insert_source.sql
+CALL sqlplus %SCHEMA%/%SCHEMAPASS%@%DATABASE% @run.sql

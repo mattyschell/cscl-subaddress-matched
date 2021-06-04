@@ -14,7 +14,7 @@ values
     (2);
 -- test 10: 2 subaddresses exist on address point 12, keep APT 1, remove bsmt, add Apt 2
 --          address point 10, BSMT unit issub_address_id 4 in subaddress-src-fixtures 
-insert into subaddress_delete 
+insert into subaddress_delete_test
     (sub_address_id)
 values
     (4);

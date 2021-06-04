@@ -15,31 +15,39 @@ Any remaining existing CSCL subaddresses that did not match Melissa subaddresses
 
 # Steps
 
-## 1. Set up objects in a scratch database (Oracle, presently) schema 
+## 1. Load the cscl.subaddress table into the same database schema
+
+This source table is registered with the geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists.
+
+Load as a table named SUBADDRESS.  Arcatalog table to table takes roughly 30 minutes.
+
+## 2. Load the melissa_geocoded_addresses.csv in the same schema 
+
+Using ArcCatalog to load 4 million records may require several hours.
+
+Load as a table named MELISSA_GEOCODED_A.
+
+## 3. (optional) Add any records to subaddress_delete to force their replacement
+
+ Sometimes we force replace existing subaddresses with the latest Melissa data.  An example is older subaddresses without house numbers that can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
+
+## 4. Feeling Lucky? Run steps 
+
+Run step 4 using run.bat 
+
+### 4a. Set up objects in a scratch database (Oracle, presently) schema 
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql 
 ```
 
-## 2. Load the cscl.subaddress table into the same database schema
-
-This source table is registered with the geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists.
-
-## 3. Load the melissa_geocoded_addresses.csv in the same schema 
-
-Using ArcCatalog to load 4 million records may require several hours.
-
-## 4. Insert relevant data into subaddress_src and melissa_geocoded_src
+### 4b. Insert relevant data into subaddress_src and melissa_geocoded_src
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql 
 ```
 
-## 5. Add any records to subaddress_delete to force their replacement
-
-We might like to refresh subaddresses that already exist but which we want to be refreshed with Melissa data.  An example is older subaddresses without house numbers.  We might wish to replace all subaddresses on an address point when there is no way to uniquely identify subaddress records without a populated house number.
-
-## 5. Populate the output tables
+### 4c. Populate the output tables
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @run.sql 
