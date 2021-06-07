@@ -24,7 +24,7 @@ VALUES(2, 'RM 1008', 1018320, NULL);
 -- test 3: Add a single missing subaddress
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
-VALUES(3,'Apt 3', 3,  100);
+VALUES(3,'APT 3', 3,  100);
 -- test 10: 2 subaddreses exist on addresspoint 12, keep APT 1, remove bsmt, add APT 2
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)

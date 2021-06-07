@@ -8,16 +8,16 @@ insert into subaddress_add (
    ,usps_hnum
 ) select
       subaddress_addseq.nextval
-     ,TRIM(UPPER(suite))
+     ,suite
      ,addresspointid
      ,hnum
   from
       melissa_geocoded_src
-  where (UPPER(suite)
+  where (suite
         ,addresspointid
         ,hnum)
   not in (select
-              UPPER(melissa_suite)
+              melissa_suite
              ,ap_id
              ,usps_hnum
           from

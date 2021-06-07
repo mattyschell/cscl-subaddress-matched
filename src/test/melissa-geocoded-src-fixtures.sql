@@ -4,19 +4,19 @@ commit;
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3006230, 'Apt 1', 568);
+    (3006230, 'APT 1', 568);
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3006230, 'Apt 2', 568);
+    (3006230, 'APT 2', 568);
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3006230, 'Apt 3', 568);
+    (3006230, 'APT 3', 568);
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3006230, 'Bsmt', 568);
+    (3006230, 'BSMT', 568);
 -- test 2: 
 -- sub_address_id RM 1002 will be force refreshed 
 -- should replace all sub address ids on the address point
@@ -33,11 +33,11 @@ values
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3, 'Apt 3', 100);
+    (3, 'APT 3', 100);
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3, 'Apt 3a', 100);
+    (3, 'APT 3a', 100);
 --
 -- tests 4 through 9 are single new subaddresses to add
 -- (on fake address points 4 through 11)
@@ -90,7 +90,7 @@ values
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (12, 'Apt 1', 100);
+    (12, 'APT 1', 100);
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values

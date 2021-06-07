@@ -15,9 +15,9 @@ Any remaining existing CSCL subaddresses that did not match Melissa subaddresses
 
 # Steps
 
-## 1. Load the cscl.subaddress table into the same database schema
+## 1. Load the cscl.subaddress table into a database schema 
 
-This source table is registered with the geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists.
+This source table is registered with the ESRI geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists in some environments.
 
 Load as a table named SUBADDRESS.  Arcatalog table to table takes roughly 30 minutes.
 
@@ -27,27 +27,27 @@ Using ArcCatalog to load 4 million records may require several hours.
 
 Load as a table named MELISSA_GEOCODED_A.
 
-## 3. (optional) Add any records to subaddress_delete to force their replacement
+## 3. Feeling Lucky?  
 
- Sometimes we force replace existing subaddresses with the latest Melissa data.  An example is older subaddresses without house numbers that can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
+Run non-optional parts of step 3 with run.bat. 
 
-## 4. Feeling Lucky? Run steps 
-
-Run step 4 using run.bat 
-
-### 4a. Set up objects in a scratch database (Oracle, presently) schema 
+### 3a. Set up work tables and objects 
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql 
 ```
 
-### 4b. Insert relevant data into subaddress_src and melissa_geocoded_src
+## 3b. (optional) Add any records to subaddress_delete to force their replacement
+
+ Sometimes we force replacement of existing subaddresses with the latest Melissa data.  A typical motivation is older subaddresses without house numbers that can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
+
+### 3c. Insert relevant loaded data into subaddress_src and melissa_geocoded_src
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql 
 ```
 
-### 4c. Populate the output tables
+### 3d. Populate the output tables
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @run.sql 
