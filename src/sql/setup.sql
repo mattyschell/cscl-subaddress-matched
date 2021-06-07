@@ -8,7 +8,6 @@ create table subaddress_src (
    ,ap_id               number(10,0)
    ,usps_hnum           number -- this is varchar in cscl I dont know why
    ,constraint subaddress_srcpkc primary key (sub_address_id)
-   ,constraint subaddress_srcuqc unique (sub_address_id,melissa_suite,ap_id,usps_hnum)
 );
 -- insert from some other temporary source (see insert_source.sql)
 -- this is limited to the columns we use
@@ -48,7 +47,7 @@ create table subaddress_add (
    ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
    ,constraint subaddress_addpkc primary key (sub_address_id)
-   ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum)
+   ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum) 
 );
 -- create a sequence for new sub_address_ids
 -- the repo code will increment the "next" value to a higher number

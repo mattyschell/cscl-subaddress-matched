@@ -8,39 +8,33 @@ insert into subaddress_add (
    ,usps_hnum
 ) select
       subaddress_addseq.nextval
-     ,suite
-     ,addresspointid
-     ,hnum
+     ,a.suite
+     ,a.addresspointid
+     ,a.hnum
   from
-      melissa_geocoded_src
-  where (suite
-        ,addresspointid
-        ,hnum)
-  not in (select
-              melissa_suite
-             ,ap_id
-             ,usps_hnum
-          from
-             subaddress_src);
+      melissa_geocoded_src a
+where not exists
+    (select 1
+     from 
+         subaddress_src b
+     where a.suite = b.melissa_suite
+     and   a.addresspointid = b.ap_id);
 commit; 
 --Any remaining unmatched CSCL subaddresses for an address should be deleted
 insert into subaddress_delete (
     sub_address_id
-) select 
-      sub_address_id 
-  from 
-      subaddress_src
-  where ap_id in 
-      (select 
-           ap_id 
-       from 
-           subaddress_add)
-  and (melissa_suite
-      ,ap_id
-      ,usps_hnum)
-  not in (select melissa_suite
-                ,ap_id
-                ,usps_hnum 
-          from 
-              subaddress_add);
+) select distinct
+    a.sub_address_id
+from
+    subaddress_src a
+join 
+    subaddress_add b
+on 
+    a.ap_id = b.ap_id
+where not exists
+    (select 1
+     from 
+         subaddress_add c
+     where a.melissa_suite = c.melissa_suite
+     and   a.ap_id = c.ap_id);
 commit;

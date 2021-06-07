@@ -13,8 +13,6 @@ When Melissa addresses do match CSCL database addresses we perform a bulk update
 Any remaining existing CSCL subaddresses that did not match Melissa subaddresses for the address should be deleted. 
 
 
-# Steps
-
 ## 1. Load the cscl.subaddress table into a database schema 
 
 This source table is registered with the ESRI geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists in some environments.
@@ -37,7 +35,7 @@ Run non-optional parts of step 3 with run.bat.
 sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql 
 ```
 
-## 3b. (optional) Add any records to subaddress_delete to force their replacement
+### 3b. (optional) Add any records to subaddress_delete to force their replacement
 
  Sometimes we force replacement of existing subaddresses with the latest Melissa data.  A typical motivation is older subaddresses without house numbers that can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
 
