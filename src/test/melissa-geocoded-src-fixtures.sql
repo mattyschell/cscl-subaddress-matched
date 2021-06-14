@@ -37,7 +37,7 @@ values
 insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
-    (3, 'APT 3a', 100);
+    (3, 'APT 3A', 100);
 --
 -- tests 4 through 9 are single new subaddresses to add
 -- (on fake address points 4 through 11)

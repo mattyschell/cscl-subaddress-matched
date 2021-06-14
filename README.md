@@ -2,15 +2,14 @@
 
 The New York City Citywide Street Centerline (CSCL) database "subaddress" table contains unit addresses associated with an address point.  Emergency response systems, geocoders, and address validators use subaddresses.
 
-The New York City Dept. of City Planning periodically geocodes 
-[Melissa](https://www.melissa.com/company/about) address data to CSCL address points.  When Melissa addresses are not matched in the database humans slog through the data and make updates to addresses and subaddresses.
+The New York City Dept. of City Planning periodically geocodes third party address data to CSCL address points.  When addresses are not matched in the database humans slog through the data and make updates to addresses and subaddresses.
 
-When Melissa addresses do match CSCL database addresses we perform a bulk update of CSCL subaddresses using the Melissa unit addresses.  For one matched address, a Melissa unit address may:
+When addresses do match CSCL database addresses we perform a bulk update of CSCL subaddresses using the third party unit addresses.  For one matched address, a third party unit address may:
 
 * Match an existing CSCL subaddress record.  Keep these CSCL subaddresses.
 * Not match an existing CSCL subaddress record.  Add these subaddresses.
 
-Any remaining existing CSCL subaddresses that did not match Melissa subaddresses for the address should be deleted. 
+Any remaining existing CSCL subaddresses that did not match third party subaddresses for the address should be deleted. 
 
 
 ## 1. Load the cscl.subaddress table into a database schema 
@@ -46,6 +45,8 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql
 ```
 
 ### 3d. Populate the output tables
+
+Output tracks the [NG911 data model](https://www.nena.org/page/NG911GISDataModel)
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @run.sql 

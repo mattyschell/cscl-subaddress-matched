@@ -53,7 +53,7 @@ minus
 select 
     sub_address_id 
 from 
-    subaddress;
+    subaddress_delete_test;
 -- these existed in legacy data, make sure we dont add more
 -- NULL melissa suites or different mixed case versions of No Data
 select 'sub_address_ids with null or ''No Data'' melissa_suite:' 
