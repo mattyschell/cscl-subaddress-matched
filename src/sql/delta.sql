@@ -19,6 +19,12 @@ where not exists
          subaddress_src b
      where a.suite = b.melissa_suite
      and   a.addresspointid = b.ap_id);
+-- explanation for the where not exists clause:
+-- subaddress_src allows NULL house numbers
+-- subaddress_add (our output) will disallow NULL house numbers
+-- we require subaddress_src records to be uniquely ID'd without hnum
+-- cases where this cannot be done (like legacy ranged addresses)
+-- must be force deleted and replaced 
 commit; 
 -- Any remaining unmatched CSCL subaddresses for an address should be deleted
 -- (or written in work table form)
@@ -35,7 +41,6 @@ from
 join (select 
           a.melissa_suite
          ,a.ap_id
-         ,a.usps_hnum 
       from 
           subaddress_src a
       where 
@@ -46,11 +51,9 @@ join (select
       minus
       select 
           c.suite
-         ,c.addresspointid
-         ,c.hnum 
+         ,c.addresspointid 
       from 
           melissa_geocoded_src c) bb
 on (aa.melissa_suite = bb.melissa_suite
-    and aa.ap_id = bb.ap_id
-    and aa.usps_hnum = bb.usps_hnum);
+    and aa.ap_id = bb.ap_id);
 commit;

@@ -28,9 +28,8 @@ VALUES(3,'APT 3', 3,  100);
 -- test 10: 2 subaddreses exist on addresspoint 12, keep APT 1, remove bsmt, add APT 2
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
-VALUES(4,'BSMT', 12, 100);
+VALUES(4,'BSMT', 12, NULL);
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
-VALUES(5,'APT 1', 12, 100);
---
+VALUES(5,'APT 1', 12, NULL);
 commit;
