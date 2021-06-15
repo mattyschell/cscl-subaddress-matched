@@ -95,4 +95,22 @@ insert into melissa_geocoded_src
     (addresspointid, suite, hnum)
 values
     (12, 'APT 2', 100);
+-- test 12: ranged address, force delete, sample copied directly from 
+-- https://github.com/mattyschell/cscl-subaddress-matched/issues/4
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (999, 'APT 1', 101);
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (999, 'APT 2', 101);
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (999, 'APT 1', 103);
+insert into melissa_geocoded_src
+    (addresspointid, suite, hnum)
+values
+    (999, 'APT 2', 103);
 commit;

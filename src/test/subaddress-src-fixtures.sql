@@ -32,4 +32,18 @@ VALUES(4,'BSMT', 12, NULL);
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
 VALUES(5,'APT 1', 12, NULL);
+-- test 12: ranged address, force delete, sample copied directly from 
+-- https://github.com/mattyschell/cscl-subaddress-matched/issues/4
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(6,'APT 1', 999, NULL);
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(7,'APT 2', 999, NULL);
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(8,'APT 1', 999, NULL);
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(9,'APT 2', 999, NULL);
 commit;

@@ -59,4 +59,22 @@ insert into subaddress_add_test
     (melissa_suite,ap_id,unit,usps_hnum)
 values
     ('APT 2', 12, 'APT 2', 100);
+-- test 12: ranged address, force delete, sample copied directly from 
+-- https://github.com/mattyschell/cscl-subaddress-matched/issues/4
+insert into subaddress_add_test
+    (melissa_suite,ap_id,unit,usps_hnum)
+values
+    ('APT 1', 999, 'APT 1', 101);
+insert into subaddress_add_test
+    (melissa_suite,ap_id,unit,usps_hnum)
+values
+    ('APT 2', 999, 'APT 2', 101);
+insert into subaddress_add_test
+    (melissa_suite,ap_id,unit,usps_hnum)
+values
+    ('APT 1', 999, 'APT 1', 103);
+insert into subaddress_add_test
+    (melissa_suite,ap_id,unit,usps_hnum)
+values
+    ('APT 2', 999, 'APT 2', 103);
 commit;

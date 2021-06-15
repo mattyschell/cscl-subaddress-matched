@@ -18,4 +18,22 @@ insert into subaddress_delete_test
     (sub_address_id)
 values
     (4);
+-- test 12: ranged address, force delete, sample copied directly from 
+-- https://github.com/mattyschell/cscl-subaddress-matched/issues/4
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (6);
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (7);
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (8);
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (9);
 commit;
