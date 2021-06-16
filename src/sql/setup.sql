@@ -33,7 +33,7 @@ create table subaddress_delete (
    ,constraint subaddress_deletepkc primary key (sub_address_id)
 );
 create table subaddress_add (
-    sub_address_id      number(10,0)
+    id                  number generated always as identity
    ,melissa_suite       varchar2(255)
    ,ap_id               number(10,0)
    ,additional_loc_info varchar2(80)
@@ -46,15 +46,6 @@ create table subaddress_add (
    ,validation_date     timestamp(6)
    ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
-   ,constraint subaddress_addpkc primary key (sub_address_id)
+   ,constraint subaddress_addpkc primary key (id)
    ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum) 
 );
--- create a sequence for new sub_address_ids
--- the repo code will increment the "next" value to a higher number
--- than the max value in subaddress_src.sub_address_id
-create sequence subaddress_addseq 
-    start with 1
-    increment by 1
-    cache 100
-    nocycle;
-    

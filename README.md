@@ -62,7 +62,7 @@ environment. Perform the delete first.
 
 ## Some notes on target CSCL.subaddress:
 
-1. Though sub_address_id is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
+1. Though  is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
 
 2. Though there is intended to be a one-to-many foreign key relationship between CSCL.address_point and CSCL.subaddress this is not enforced. When loading to CSCL we should check subaddress_add to ensure valid address point ids before adding new records to the unconstrained target CSCL.subaddress table.
 

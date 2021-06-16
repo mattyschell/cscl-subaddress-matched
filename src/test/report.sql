@@ -56,11 +56,11 @@ from
     subaddress_delete_test;
 -- these existed in legacy data, make sure we dont add more
 -- NULL melissa suites or different mixed case versions of No Data
-select 'sub_address_ids with null or ''No Data'' melissa_suite:' 
+select 'ids with null or ''No Data'' melissa_suite:' 
 from 
     dual;
 select 
-    sub_address_id
+    id
 from 
     subaddress_add
 where 
@@ -68,11 +68,11 @@ where
 or  upper(melissa_suite) LIKE '%NO DATA%';
 -- these existed in legacy data. populated melissa_suite but
 -- all six NG911 compartmentalized information fields are NULL
-select 'sub_address_ids with no NG911 compartmentalized information fields:' 
+select 'ids with no NG911 compartmentalized information fields:' 
 from 
     dual;
 select 
-    sub_address_id 
+    id 
 from 
     subaddress_add
 where 
@@ -86,10 +86,10 @@ and melissa_suite is not null;
 -- verify ng911 fields in test match expected fixtures
 -- this only works on the hand-crafted 1:1 tests (single ap_id on both sides to join)
 -- add to the end of the where clause (or rewrite this!)
-select 'sub_address_ids with unexpected NG911 compartmentalized information fields:' 
+select 'ids with unexpected NG911 compartmentalized information fields:' 
 from 
     dual;
-select a.sub_address_id 
+select a.id 
 from 
     subaddress_add a
 join 

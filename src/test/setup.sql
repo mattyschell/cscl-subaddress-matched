@@ -1,13 +1,12 @@
 @src/test/teardown.sql
 @src/sql/setup.sql
-@src/sql/deploy.sql
 -- sidecar tables to hold expected test results
 create table subaddress_delete_test (
     sub_address_id number(10,0)
    ,constraint subaddress_delete_testpkc primary key (sub_address_id)
 );
 create table subaddress_add_test (
-    sub_address_id      number(10,0) generated always as identity
+    id                  number(10,0) generated always as identity
    ,melissa_suite       varchar2(255)
    ,ap_id               number(10,0)
    ,additional_loc_info varchar2(80)
@@ -20,7 +19,7 @@ create table subaddress_add_test (
    ,validation_date     timestamp(6)
    ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
-   ,constraint subaddress_add_testpkc primary key (sub_address_id)
+   ,constraint subaddress_add_testpkc primary key (id)
    ,constraint subaddress_add_testuqc unique (ap_id,melissa_suite,usps_hnum)
 );
 -- test data
