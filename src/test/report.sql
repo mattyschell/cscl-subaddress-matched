@@ -3,30 +3,30 @@ from
     dual;
 select 
     ap_id
-   ,UPPER(melissa_suite)
+   ,upper(melissa_suite)
    ,usps_hnum 
 from 
     subaddress_add_test
 minus
 select 
     ap_id
-   ,UPPER(melissa_suite) 
-   ,usps_hnum
+   ,upper(to_char(melissa_suite) )
+   ,to_char(usps_hnum)
 from 
-subaddress_add;
-select 'Tuples (ap_id,melissa_suite,usps_hnum) that should not be in subaddress_add: ' 
+subaddress_add_vw;
+select 'Tuples (ap_id,melissa_suite,usps_hnum) that should not be in subaddress_add_vw: ' 
 from 
     dual;
 select 
     ap_id
-   ,UPPER(melissa_suite) 
-   ,usps_hnum
+   ,upper(TO_CHAR(melissa_suite)) 
+   ,to_char(usps_hnum)
 from 
-    subaddress_add
+    subaddress_add_vw
 minus
 select 
     ap_id
-   ,UPPER(melissa_suite) 
+   ,upper(melissa_suite) 
    ,usps_hnum
 from 
 subaddress_add_test;
@@ -56,25 +56,29 @@ from
     subaddress_delete_test;
 -- these existed in legacy data, make sure we dont add more
 -- NULL melissa suites or different mixed case versions of No Data
-select 'ids with null or ''No Data'' melissa_suite:' 
+select 'Tuples (ap_id,melissa_suite,usps_hnum) with null or ''No Data'' melissa_suite:' 
 from 
     dual;
 select 
-    id
+    ap_id
+   ,melissa_suite
+   ,usps_hnum
 from 
-    subaddress_add
+    subaddress_add_vw
 where 
     melissa_suite is null
-or  upper(melissa_suite) LIKE '%NO DATA%';
+or  upper(to_char(melissa_suite)) LIKE '%NO DATA%';
 -- these existed in legacy data. populated melissa_suite but
 -- all six NG911 compartmentalized information fields are NULL
-select 'ids with no NG911 compartmentalized information fields:' 
+select 'Tuples (ap_id,melissa_suite,usps_hnum) with no NG911 compartmentalized information fields:' 
 from 
     dual;
 select 
-    id 
+    ap_id
+   ,melissa_suite
+   ,usps_hnum 
 from 
-    subaddress_add
+    subaddress_add_vw
 where 
     additional_loc_info is null
 and building is null
@@ -86,12 +90,15 @@ and melissa_suite is not null;
 -- verify ng911 fields in test match expected fixtures
 -- this only works on the hand-crafted 1:1 tests (single ap_id on both sides to join)
 -- add to the end of the where clause (or rewrite this!)
-select 'ids with unexpected NG911 compartmentalized information fields:' 
+select 'Tuples (ap_id,melissa_suite,usps_hnum) with unexpected NG911 compartmentalized information fields:' 
 from 
     dual;
-select a.id 
+select 
+    a.ap_id
+   ,a.melissa_suite
+   ,a.usps_hnum
 from 
-    subaddress_add a
+    subaddress_add_vw a
 join 
     subaddress_add_test b
 on 

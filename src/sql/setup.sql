@@ -71,6 +71,6 @@ select
    ,cast(null as nvarchar2(1)) as boroughcode
    ,cast(null as timestamp(6)) as validation_date
    ,cast('USPS Melissa data' as nvarchar2(50)) as update_source
-   ,cast(usps_hnum as nvarchar2(15)) as usps_num
+   ,cast(usps_hnum as nvarchar2(15)) as usps_hnum
 from subaddress_add;
 
