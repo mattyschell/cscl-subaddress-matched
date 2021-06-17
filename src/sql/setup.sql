@@ -49,3 +49,28 @@ create table subaddress_add (
    ,constraint subaddress_addpkc primary key (id)
    ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum) 
 );
+-- cscl team would like to receive output that is identical (except globalid)
+-- create a view with all of the columns dummified
+create or replace view subaddress_add_vw
+as 
+select 
+    cast(null as number) as objectid
+   ,cast(null as number(10,0)) as sub_address_id
+   ,cast(melissa_suite as nvarchar2(255)) as melissa_suite
+   ,cast(ap_id as number(10,0)) as ap_id
+   ,cast(additional_loc_info as nvarchar2(80)) as additional_loc_info
+   ,cast(building as nvarchar2(50)) as building
+   ,cast(floor as nvarchar2(50)) as floor
+   ,cast(unit as nvarchar2(50)) as unit
+   ,cast(room as nvarchar2(50)) as room
+   ,cast(seat as nvarchar2(50)) as seat
+   ,cast(null as nvarchar2(50)) as created_by
+   ,cast(null as date) as created_date
+   ,cast(null as nvarchar2(50)) as modified_by
+   ,cast(null as date) as modified_date
+   ,cast(null as nvarchar2(1)) as boroughcode
+   ,cast(null as timestamp(6)) as validation_date
+   ,cast('USPS Melissa data' as nvarchar2(50)) as update_source
+   ,cast(usps_hnum as nvarchar2(15)) as usps_num
+from subaddress_add;
+

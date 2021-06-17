@@ -14,9 +14,9 @@ Any remaining existing CSCL subaddresses that did not match third party subaddre
 
 ## 1. Load the cscl.subaddress table into a database schema 
 
-This source table is registered with the ESRI geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view exists in some environments.
+This source table is registered with the ESRI geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view with SQL access exists in some environments.
 
-Load as a table named SUBADDRESS.  Arcatalog table to table takes roughly 30 minutes.
+Load as a table named SUBADDRESS.  Arcatalog table-to-table takes roughly 30 minutes.
 
 ## 2. Load the melissa_geocoded_addresses.csv in the same schema 
 
@@ -56,13 +56,14 @@ Outputs populated:
 
 * subaddress_delete
 * subaddress_add
+* subaddress_add_vw 
 
-These output tables are ready to delete and insert records in the target CSCL
-environment. Perform the delete first.
+These outputs are ready to delete and insert records in the target CSCL
+environment. Perform the delete first. Use the subaddress_add_vw for the final values and types expected in CSCL.
 
 ## Some notes on target CSCL.subaddress:
 
-1. Though  is intended to be unique there is no constraint in the CSCL database. So this must be enforced in the work tables of this repository
+1. Though sub_address_id is intended to be unique there is no constraint in the CSCL database. This key is maintained externally by CSCL data managers.
 
 2. Though there is intended to be a one-to-many foreign key relationship between CSCL.address_point and CSCL.subaddress this is not enforced. When loading to CSCL we should check subaddress_add to ensure valid address point ids before adding new records to the unconstrained target CSCL.subaddress table.
 
