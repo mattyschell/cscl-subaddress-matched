@@ -50,12 +50,12 @@ create table subaddress_add (
    ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum) 
 );
 -- cscl team would like to receive output that is identical (except globalid)
+-- leave off objectid too since output is file gdb where it will be created 
 -- create a view with all of the columns dummified
 create or replace view subaddress_add_vw
 as 
 select 
-    cast(null as number) as objectid
-   ,cast(null as number(10,0)) as sub_address_id
+    cast(null as number(10,0)) as sub_address_id
    ,cast(melissa_suite as nvarchar2(255)) as melissa_suite
    ,cast(ap_id as number(10,0)) as ap_id
    ,cast(additional_loc_info as nvarchar2(80)) as additional_loc_info
