@@ -52,14 +52,25 @@ Output tracks the [NG911 data model](https://www.nena.org/page/NG911GISDataModel
 sqlplus devschema/"iluvesri247"@devdb @run.sql 
 ```
 
-Outputs populated:
+Database Outputs:
 
 * subaddress_delete
-* subaddress_add
-* subaddress_add_vw 
+* subaddress_add_vw (view on subaddress_add)
 
-These outputs are ready to delete and insert records in the target CSCL
-environment. Perform the delete first. Use the subaddress_add_vw for the final values and types expected in CSCL.
+### 3e. Export To File Geodatabase
+
+```
+SET SDEFILE=C:\gis\connections\devschema.sde
+python.exe .\src\py\export.py
+```
+
+* cscl-subaddress-matched.gdb
+     * SUBADDRESS_DELETE
+     * SUBADDRESS_ADD
+     
+These outputs are ready to delete and insert records in the target CSCL environment. Perform the delete first.
+
+
 
 ## Some notes on target CSCL.subaddress:
 

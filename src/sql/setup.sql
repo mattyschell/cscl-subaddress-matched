@@ -36,15 +36,8 @@ create table subaddress_add (
     id                  number generated always as identity
    ,melissa_suite       varchar2(255)
    ,ap_id               number(10,0)
-   ,additional_loc_info varchar2(80)
-   ,building            varchar2(50)
-   ,floor               varchar2(50) 
-   ,unit                varchar2(50)
-   ,room                varchar2(50)
-   ,seat                varchar2(50)
    ,boroughcode         varchar2(1)
    ,validation_date     timestamp(6)
-   ,update_source       varchar2(50)
    ,usps_hnum           varchar2(15)
    ,constraint subaddress_addpkc primary key (id)
    ,constraint subaddress_adduqc unique (ap_id, melissa_suite, usps_hnum) 
@@ -56,14 +49,64 @@ create or replace view subaddress_add_vw
 as 
 select 
     cast(null as number(10,0)) as sub_address_id
-   ,cast(melissa_suite as nvarchar2(255)) as melissa_suite
-   ,cast(ap_id as number(10,0)) as ap_id
-   ,cast(additional_loc_info as nvarchar2(80)) as additional_loc_info
-   ,cast(building as nvarchar2(50)) as building
-   ,cast(floor as nvarchar2(50)) as floor
-   ,cast(unit as nvarchar2(50)) as unit
-   ,cast(room as nvarchar2(50)) as room
-   ,cast(seat as nvarchar2(50)) as seat
+   ,cast(a.melissa_suite as nvarchar2(255)) as melissa_suite
+   ,cast(a.ap_id as number(10,0)) as ap_id
+   ,case
+       when upper(a.melissa_suite) like 'DEPT%'
+       or   upper(a.melissa_suite) = 'FRNT' -- distinguish from FRNT in room
+       or   upper(a.melissa_suite) like 'LOT%'
+       or   upper(a.melissa_suite) like 'PIER%'
+       or   upper(a.melissa_suite) like 'SIDE%'
+       or   upper(a.melissa_suite) like 'STOP%'
+       or   upper(a.melissa_suite) = 'REAR' -- distinguish from REAR xx in unit
+       then
+           cast(a.melissa_suite as nvarchar2(80))
+       else
+           null
+    end as additional_loc_info 
+   ,case
+       when upper(a.melissa_suite) LIKE 'BLDG%'
+       then
+           cast(a.melissa_suite as nvarchar2(50))
+       else
+           null
+    end as building 
+   ,case
+       when upper(a.melissa_suite) like 'BSMT%'
+       or   upper(a.melissa_suite) like 'FL%'
+       or   upper(a.melissa_suite) like 'LOWR%'
+       or   upper(a.melissa_suite) like 'UPPR%'
+       then
+           cast(a.melissa_suite as nvarchar2(50))
+       else
+           null
+    end as floor 
+   ,case
+       when upper(a.melissa_suite) like 'APT%'
+       or   upper(a.melissa_suite) like 'PH%'
+       or   upper(a.melissa_suite) like 'SPC%'
+       or   upper(a.melissa_suite) like 'STE%'
+       or   upper(a.melissa_suite) like 'UNIT%'
+       or   upper(a.melissa_suite) like '#%'
+       or   regexp_like(a.melissa_suite, '^[0-9]') 
+       or   (length(a.melissa_suite) = 1 and regexp_like(a.melissa_suite, '^[:A-Z:]')) 
+       or   upper(a.melissa_suite) like 'REAR %' -- distinguish from 'REAR'
+       then
+           cast(a.melissa_suite as nvarchar2(50))
+       else
+           null
+    end as unit 
+   ,case
+       when upper(a.melissa_suite) like 'FRNT %' --distinguish from 'FRNT'
+       or   upper(a.melissa_suite) like 'LBBY%'
+       or   upper(a.melissa_suite) like 'OFC%'
+       or   upper(a.melissa_suite) like 'RM%'
+       then
+           cast(a.melissa_suite as nvarchar2(50))
+       else
+           null
+    end as room 
+   ,cast(null as nvarchar2(50)) as seat
    ,cast(null as nvarchar2(50)) as created_by
    ,cast(null as date) as created_date
    ,cast(null as nvarchar2(50)) as modified_by
@@ -71,6 +114,6 @@ select
    ,cast(null as nvarchar2(1)) as boroughcode
    ,cast(null as timestamp(6)) as validation_date
    ,cast('USPS Melissa data' as nvarchar2(50)) as update_source
-   ,cast(usps_hnum as nvarchar2(15)) as usps_hnum
-from subaddress_add;
-
+   ,cast(a.usps_hnum as nvarchar2(15)) as usps_hnum
+from 
+    subaddress_add a;

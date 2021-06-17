@@ -3,7 +3,6 @@
 -- we are testing the next three lines, run.sql
 @src/sql/forcerefresh.sql
 @src/sql/delta.sql
-@src/sql/populate911fields.sql
 -- expected results and report next
 @src/test/subaddress-delete-test-fixtures.sql
 @src/test/subaddress-add-test-fixtures.sql
