@@ -47,6 +47,18 @@ exception
 end;
 /
 begin
+    execute immediate 'drop view subaddress_add_vw';
+exception 
+    when others then
+    if sqlcode = -942
+    then
+        null;
+    else
+        raise;
+    end if;
+end;
+/
+begin
     execute immediate 'drop table subaddress_add';
 exception 
     when others then
