@@ -14,15 +14,25 @@ Any remaining existing CSCL subaddresses that did not match third party subaddre
 
 ## 1. Load the cscl.subaddress table into a database schema 
 
+Load as a table named SUBADDRESS.  
+
 This source table is registered with the ESRI geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view with SQL access exists in some environments.
 
-Load as a table named SUBADDRESS.  Arcatalog table-to-table takes roughly 30 minutes.
+Arcatalog table-to-table takes anywhere from 30 minutes to multiple hours depending on source and target.
 
 ## 2. Load the melissa_geocoded_addresses.csv in the same schema 
 
-Using ArcCatalog to load 4 million records may require several hours.
-
 Load as a table named MELISSA_GEOCODED_A.
+
+Using ArcCatalog to load 4 million records will likely require many hours. 
+
+## 1. and 2. Check 
+
+Best to check the load steps above to be sure we are getting the expected data and types.  Run this while the load is running for peace of mind.
+
+```
+sqlplus devschema/"iluvesri247"@devdb @src/sql/input_check.sql 
+```
 
 ## 3. Feeling Lucky?  
 
