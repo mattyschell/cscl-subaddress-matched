@@ -59,7 +59,8 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/insert_source.sql
 Output tracks the [NG911 data model](https://www.nena.org/page/NG911GISDataModel)
 
 ```
-sqlplus devschema/"iluvesri247"@devdb @run.sql 
+sqlplus devschema/"iluvesri247"@devdb @src/sql/forcerefresh.sql 
+sqlplus devschema/"iluvesri247"@devdb @@src/sql/delta.sql 
 ```
 
 Database Outputs:
