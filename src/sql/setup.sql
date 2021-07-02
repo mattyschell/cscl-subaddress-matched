@@ -19,13 +19,6 @@ create table melissa_geocoded_src (
     ,hnum               number
     ,constraint melissa_geocoded_srcuqc unique (addresspointid,suite,hnum)
 );
--- geocoded but no suite, probably not going to use these
--- these are either base addresses for each set of units
--- or errors, missing units in melissa (only about 2k of these)
-create table melissa_geocoded_src_nos (
-    addresspointid      number 
-   ,constraint melissa_geocoded_src_nospkc primary key (addresspointid)
-);
 -- the next two are outputs
 -- though subaddress delete can be prepopulated to force replacements
 create table subaddress_delete (
