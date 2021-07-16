@@ -1,3 +1,6 @@
+-- These are test inputs mimicing DCP geocoded Melissa data
+-- They add and delete from corresponding subaddress-src-fixtures.sql
+--
 delete from melissa_geocoded_src;
 commit;
 -- test 1: simple apt with no changes, nothing will happen

@@ -42,6 +42,26 @@ where
     addresspointid is not null
 and suite is not null;
 commit;    
+--
+-- addresses with no suite at all, about 2k
+-- the NOT IN is required because many melissa_geocoded_address records
+-- have a null suite that are tucked in among populated suites
+-- for the same address, these are the "base address" for those units
+insert into melissa_geocoded_src_nos (
+    addresspointid
+) 
+select
+    distinct addresspointid 
+from 
+    melissa_geocoded_a
+where 
+    addresspointid is not null
+and suite is null
+and addresspointid not in (select 
+                               addresspointid 
+                           from 
+                              melissa_geocoded_src);
+commit;   
 -- 
 call dbms_stats.gather_schema_stats(USER);
 

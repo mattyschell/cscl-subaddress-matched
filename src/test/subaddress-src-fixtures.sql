@@ -1,3 +1,5 @@
+-- These are fake, testing inputs as if from CSCL
+-- They will be added to and deleted from based on testing inputs
 delete from subaddress_src;
 commit;
 -- test1: basic address with no updates
@@ -46,4 +48,23 @@ VALUES(8,'APT 1', 999, NULL);
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
 VALUES(9,'APT 2', 999, NULL);
+-- test 13: https://github.com/mattyschell/cscl-subaddress-matched/issues/11
+-- delete subaddresses when geocoded melissa data indicates none exist
+-- test 13 will delete this single subaddress
+-- this subaddress should appear in the delete output table
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(10,'APT 1', 13, NULL);
+-- test 14: https://github.com/mattyschell/cscl-subaddress-matched/issues/11
+-- same as 13 but should delete multiple subaddresses
+-- these 3 subaddresses should appear in the delete output table
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(11,'APT 1', 14, NULL);
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(12,'APT 2', 14, NULL);
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(13,'APT 3', 14, NULL);
 commit;

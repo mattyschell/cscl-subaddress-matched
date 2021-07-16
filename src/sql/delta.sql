@@ -53,3 +53,24 @@ join (select
 on (aa.melissa_suite = bb.melissa_suite
     and aa.ap_id = bb.ap_id);
 commit;
+-- When geocoded melissa data indicates no subaddresses exist for an address 
+-- point and CSCL has subaddresses, delete the CSCL subaddresses
+-- <where not exists> is in case these were already force deleted
+insert into subaddress_delete (
+    sub_address_id
+)
+select 
+    a.sub_address_id
+from 
+    subaddress_src a
+join
+    melissa_geocoded_src_nos b
+on 
+    a.ap_id = b.addresspointid
+where not exists
+    (select 1 
+     from 
+         subaddress_delete c
+     where 
+         c.sub_address_id = a.sub_address_id);
+commit;

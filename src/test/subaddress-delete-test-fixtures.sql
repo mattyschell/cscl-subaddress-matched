@@ -36,4 +36,26 @@ insert into subaddress_delete_test
     (sub_address_id)
 values
     (9);
+-- test 13: https://github.com/mattyschell/cscl-subaddress-matched/issues/11
+-- delete subaddresses when geocoded melissa data indicates none exist
+-- test 13 will delete this single subaddress
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (10);
+-- test 14: https://github.com/mattyschell/cscl-subaddress-matched/issues/11
+-- same as 13 but should delete multiple subaddresses
+-- these 3 subaddresses should appear in the delete output table
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (11);
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (12);
+insert into subaddress_delete_test
+    (sub_address_id)
+values
+    (13);
 commit;
