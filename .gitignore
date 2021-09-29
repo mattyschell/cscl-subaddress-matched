@@ -1,2 +1,4 @@
 /scratch
 *.gdb/*
+*pruned.csv
+melissa_geocoded_a.sql

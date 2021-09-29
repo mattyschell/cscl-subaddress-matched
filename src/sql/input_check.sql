@@ -20,7 +20,7 @@ begin
          sub_address_id
         ,trim(upper(melissa_suite))
         ,ap_id
-        ,to_number(usps_hnum) --cscl is character
+        ,usps_hnum 
     from subaddress
     where rownum = 1);
     dbms_output.put_line('We are looking: ' || outp);
@@ -39,7 +39,7 @@ begin
         distinct
             addresspointid
            ,trim(upper(to_char(suite)))
-           ,to_number(hnum)
+           ,f1_normalized_hn
     from 
         melissa_geocoded_a
     where 

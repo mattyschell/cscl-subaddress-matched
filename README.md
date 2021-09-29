@@ -1,30 +1,59 @@
 # cscl-subaddress-matched
 
-The New York City Citywide Street Centerline (CSCL) database "subaddress" table contains unit addresses (aka subaddresses) associated with an address point.  New York City emergency response systems, geocoders, and address validators use subaddresses.  Friends, this is our repository for updating subaddresses, our logic, the trick is to never be afraid.
+The New York City Citywide Street Centerline (CSCL) database "subaddress" table 
+contains unit addresses (aka subaddresses) associated with an address point.  
+New York City emergency response systems, geocoders, and address validators use 
+subaddresses.  Friends, this is our repository for updating subaddresses, our 
+logic, the trick is to never be afraid.
 
-The New York City Dept. of City Planning annually geocodes commercial subaddress data to CSCL address points.  When the commercial addresses are not in the CSCL database humans slog through the data and make updates to addresses and subaddresses as necessary.
+The New York City Dept. of City Planning annually geocodes commercial subaddress 
+data to CSCL address points.  When the commercial addresses are not in the CSCL 
+database humans slog through the data and make updates to addresses and 
+subaddresses as necessary.
 
-When commerical addresses do match CSCL database addresses we perform a bulk update of CSCL subaddresses using the commercial subaddresses.  For a matched address, an associated commercial subaddress may:
+When commerical addresses do match CSCL database addresses we perform a bulk 
+update of CSCL subaddresses using the commercial subaddresses.  For a matched 
+address, an associated commercial subaddress may:
 
 * Match an existing CSCL subaddress record.  Do nothing.
 * Not match an existing CSCL subaddress record.  Add this commercial subaddress.
 
-Any remaining existing CSCL subaddresses that did not match commerical subaddresses for the matched address should be deleted. 
-
+Any remaining existing CSCL subaddresses that did not match commerical 
+subaddresses for the matched address should be deleted. 
 
 ## 1. Load the cscl.subaddress table into a database schema 
 
-Load as a table named SUBADDRESS.  
+Load as a table named SUBADDRESS.  Using ArcCatalog ensures that database types 
+are not changed. Expect this to require between 30 and 60 minutes.
 
-The source table is registered with the ESRI geodatabase but is non-spatial with no archiving, no editor tracking, and no daily editing.  A versioned view with SQL access exists in some environments.
+The source table is registered with the ESRI geodatabase but is non-spatial with 
+no archiving, no editor tracking, and almost no manual editing.  There is no 
+versioned view allowing SQL access.
 
-Arcatalog table-to-table takes anywhere from 30 minutes to multiple hours depending on source and target.
+## 2. Load the enhanced csv in the same schema 
 
-## 2. Load the melissa_geocoded_addresses.csv in the same schema 
+Create an empty MELISSA_GEOCODED_A table. 
 
-Load as a table named MELISSA_GEOCODED_A.
+```
+sqlplus devschema/"iluvesri247"@devdb @src/sql/setup_inputs.sql 
+```
 
-Using ArcCatalog to load 4 million records will likely require many hours. 
+Convert the enhanced third party csv file to SQL insert statements.  This code 
+assumes column naming conventions and reads and writes to the current working 
+directory, it is not fancy.
+
+Beware that the documentation and file names delivered to us may be incorrect. 
+Input the csv with duplicate addresses and suite values populated, the big one.
+
+```
+C:\Progra~1\ArcGIS\Pro\bin\Python\scripts\propy.bat .\src\py\inputconverter.py C:\Temp\melissadata_geocoding_2020\melissa_geocoded_addresses.csv
+```
+
+Load MELISSA_GEOCODED_A.  This should finish in approximately 1 hour.
+
+```
+sqlplus devschema/"iluvesri247"@devdb @melissa_geocoded_a.sql 
+```
 
 ## 1. and 2. Check 
 
@@ -46,7 +75,7 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql
 
 ### 3b. (optional) Add IDs to subaddress_delete to force their replacement
 
- Sometimes we force replacement of existing subaddresses with the latest commerical data.  A typical motivation is older subaddresses without house numbers that can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
+ Sometimes we force replacement of existing subaddresses with the latest commerical data.  A typical motivation is legacy subaddresses without house numbers so they can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
 
 ### 3c. Insert relevant loaded data into subaddress_src and melissa_geocoded_src
 

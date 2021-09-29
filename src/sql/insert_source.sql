@@ -8,7 +8,7 @@ select
      sub_address_id
     ,trim(upper(melissa_suite))
     ,ap_id
-    ,to_number(usps_hnum) --cscl is character
+    ,usps_hnum
 from subaddress;
 commit;
 --
@@ -35,7 +35,7 @@ select
     distinct
         addresspointid
        ,trim(upper(to_char(suite)))
-       ,to_number(hnum)
+       ,f1_normalized_hn
 from 
     melissa_geocoded_a
 where 

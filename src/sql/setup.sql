@@ -6,17 +6,18 @@ create table subaddress_src (
     sub_address_id      number(10,0)
    ,melissa_suite       varchar2(255)
    ,ap_id               number(10,0)
-   ,usps_hnum           number -- this is varchar in cscl I dont know why
+   ,usps_hnum           varchar2(15) -- this is varchar to allow for hyphens
    ,constraint subaddress_srcpkc primary key (sub_address_id)
 );
--- insert from some other temporary source (see insert_source.sql)
+-- insert from some other temporary source, expect it to be named 
+-- melissa_geocoded_a (see insert_source.sql)
 -- this is limited to the columns we use
 -- in testing we will populate this from the repo
 -- 
 create table melissa_geocoded_src (
      addresspointid     number
     ,suite              varchar2(256)
-    ,hnum               number
+    ,hnum               varchar2(15)
     ,constraint melissa_geocoded_srcuqc unique (addresspointid,suite,hnum)
 );
 -- geocoded addresses with no suite, ( _nos = no suite)
