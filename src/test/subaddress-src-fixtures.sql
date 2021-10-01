@@ -67,4 +67,10 @@ VALUES(12,'APT 2', 14, NULL);
 INSERT INTO subaddress_src
 (SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
 VALUES(13,'APT 3', 14, NULL);
+-- test 15: f1_normalized_hn input to hnum includes hyphens
+-- https://github.com/mattyschell/cscl-subaddress-matched/issues/12
+-- simple test, apt 1 exists we will add 2
+INSERT INTO subaddress_src
+(SUB_ADDRESS_ID, MELISSA_SUITE, AP_ID, USPS_HNUM)
+VALUES(14,'APT 1', 1515, '100-01');
 commit;

@@ -2,24 +2,24 @@
 
 The New York City Citywide Street Centerline (CSCL) database "subaddress" table 
 contains unit addresses (aka subaddresses) associated with an address point.  
-New York City emergency response systems, geocoders, and address validators use 
-subaddresses.  Friends, this is our repository for updating subaddresses, our 
-logic, the trick is to never be afraid.
+New York City emergency response agencies and related systems use subaddresses. 
+Friends, this is our repository for updating subaddresses, our rules, the trick 
+is never to be afraid.
 
-The New York City Dept. of City Planning annually geocodes commercial subaddress 
-data to CSCL address points.  When the commercial addresses are not in the CSCL 
-database humans slog through the data and make updates to addresses and 
-subaddresses as necessary.
+The New York City Department of City Planning annually geocodes commercial 
+subaddress data to CSCL address points.  When the commercial addresses are not 
+in the CSCL database humans slog through the data and make updates to addresses
+and subaddresses.
 
-When commerical addresses do match CSCL database addresses we perform a bulk 
-update of CSCL subaddresses using the commercial subaddresses.  For a matched 
-address, an associated commercial subaddress may:
+When commerical addresses do match CSCL database address points we perform a 
+bulk update of CSCL subaddresses using the commercial subaddresses.  For a 
+matched address, an associated commercial subaddress may:
 
 * Match an existing CSCL subaddress record.  Do nothing.
-* Not match an existing CSCL subaddress record.  Add this commercial subaddress.
+* Not match an existing CSCL subaddress record.  Add the commercial subaddress.
 
 Any remaining existing CSCL subaddresses that did not match commerical 
-subaddresses for the matched address should be deleted. 
+subaddresses for the matched address point should be deleted. 
 
 ## 1. Load the cscl.subaddress table into a database schema 
 
@@ -27,7 +27,7 @@ Load as a table named SUBADDRESS.  Using ArcCatalog ensures that database types
 are not changed. Expect this to require between 30 and 60 minutes.
 
 The source table is registered with the ESRI geodatabase but is non-spatial with 
-no archiving, no editor tracking, and almost no manual editing.  There is no 
+no archiving, no editor tracking, and is rarely edited.  There is no 
 versioned view allowing SQL access.
 
 ## 2. Load the enhanced csv in the same schema 
@@ -49,7 +49,8 @@ Input the csv with duplicate addresses and suite values populated, the big one.
 C:\Progra~1\ArcGIS\Pro\bin\Python\scripts\propy.bat .\src\py\inputconverter.py C:\Temp\melissadata_geocoding_2020\melissa_geocoded_addresses.csv
 ```
 
-Load MELISSA_GEOCODED_A.  This should finish in approximately 1 hour.
+Load MELISSA_GEOCODED_A.  This should finish in approximately 1 hour when loading
+3 million records.
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @melissa_geocoded_a.sql 
