@@ -50,7 +50,7 @@ C:\Progra~1\ArcGIS\Pro\bin\Python\scripts\propy.bat .\src\py\inputconverter.py C
 ```
 
 Load MELISSA_GEOCODED_A.  This should finish in approximately 1 hour when loading
-3 million records.
+4 million records.
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @melissa_geocoded_a.sql 
@@ -58,7 +58,8 @@ sqlplus devschema/"iluvesri247"@devdb @melissa_geocoded_a.sql
 
 ## 1. and 2. Check 
 
-Best to check the load steps above to be sure we are getting the expected data and types.  Execute this while the load is running for peace of mind.
+Best to check the load steps above to be sure we are getting the expected data 
+and types. Execute this while the load is running for peace of mind.
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/input_check.sql 
@@ -90,7 +91,7 @@ Output tracks the [NG911 data model](https://www.nena.org/page/NG911GISDataModel
 
 ```
 sqlplus devschema/"iluvesri247"@devdb @src/sql/forcerefresh.sql 
-sqlplus devschema/"iluvesri247"@devdb @@src/sql/delta.sql 
+sqlplus devschema/"iluvesri247"@devdb @src/sql/delta.sql 
 ```
 
 Database Outputs:
@@ -109,7 +110,7 @@ python.exe .\src\py\export.py
      * SUBADDRESS_DELETE
      * SUBADDRESS_ADD
      
-These outputs are ready to be deliverd to the CSCL managers to delete and insert records in the target environment. Perform the delete first.
+These outputs are ready to be delivered to the CSCL managers to delete and insert records in the target environment. Perform the delete first.
 
 
 ## Some notes on target CSCL.subaddress:

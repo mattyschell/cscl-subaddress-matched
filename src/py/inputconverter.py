@@ -111,18 +111,3 @@ if __name__ == '__main__':
 
     addresses.writesql(melissa_geocoded_a_sql)
 
-
-
-
-
-
-
-    
-
-
-
-
-
-
-    
-
