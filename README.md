@@ -77,7 +77,11 @@ sqlplus devschema/"iluvesri247"@devdb @src/sql/setup.sql
 
 ### 3b. (optional) Add IDs to subaddress_delete to force their replacement
 
- Sometimes we force replacement of existing subaddresses with the latest commerical data.  A typical motivation is legacy subaddresses without house numbers so they can't be uniquely identified.  We can replace all subaddresses on an address point by adding their sub_address_ids to subaddress_delete prior to running the next step.
+ Sometimes we force replacement of existing subaddresses with the latest 
+ commerical data.  A typical motivation is legacy subaddresses lacking house 
+ numbers so they can't be uniquely identified.  When we add a subaddress id to
+ subaddress_delete we the force the replacement of all subaddresses sharing the 
+ address point.
 
 ### 3c. Insert relevant loaded data into subaddress_src and melissa_geocoded_src
 
@@ -100,6 +104,8 @@ Database Outputs:
 * subaddress_add_vw (view on subaddress_add)
 
 ### 3e. Export To File Geodatabase 
+
+The export will overwrite an existing cscl_subaddress_matched.gdb. 
 
 ```
 SET SDEFILE=C:\gis\connections\devschema.sde
@@ -135,6 +141,29 @@ Update the environmentals in test.bat
 ![test schema diagram png](https://github.com/mattyschell/cscl-subaddress-matched/blob/main/doc/test_schema.png?raw=true)
 
 
+## Subaddress Attribute Metadata
+
+| Attribute | Maintenance Notes and Clues |
+|------------ | ------------- |
+| objectid | synthetic key |
+| sub_address_id | business key |
+| melissa_suite | unprocessed 3rd party commercial data |
+| ap_id | foreign key to addresspoint (many to one) |
+| additional_loc_info | parsed from melissa_suite based on NG911 data model |
+| building | parsed from melissa_suite based on NG911 data model |
+| floor | parsed from melissa_suite based on NG911 data model |
+| unit | parsed from melissa_suite based on NG911 data model |
+| room | parsed from melissa_suite based on NG911 data model |
+| seat | not populated |
+| created_by | manually maintained, originally ESRI editor tracking |
+| created_date | manually maintained, originally ESRI editor tracking |
+| modified_by | manually maintained, originally ESRI editor tracking |
+| modified_date | manually maintained, originally ESRI editor tracking |
+| globalid | uuid |
+| boroughcode | not maintained |
+| validation_date | not maintained |
+| update_source | descriptive |
+| usps_hnum | house number |
 
 
 
